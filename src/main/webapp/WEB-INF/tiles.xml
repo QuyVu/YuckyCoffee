@@ -1,0 +1,60 @@
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<!-- Login Page -->
+	<definition name="loginPage" template="/WEB-INF/view/pages/login.ftl"
+		templateType="freemarker">
+		<put-attribute name="title" value="Login" />
+	</definition>
+
+	<!-- 403 Error Page -->
+	<definition name="403" template="/WEB-INF/view/pages/403.ftl"
+		templateType="freemarker">
+		<put-attribute name="title" value="403 forbidden" />
+	</definition>
+
+	<!-- Base Layout -->
+	<definition name="baseLayout" template="/WEB-INF/view/static/layout.ftl"
+		templateType="freemarker">
+		<put-attribute name="header" value="/WEB-INF/view/static/header.ftl"
+			type="freemarker" />
+		<put-attribute name="title" value="Sample Title" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/view/static/footer.ftl"
+			type="freemarker" />
+	</definition>
+
+	<definition name="orderPage" extends="baseLayout">
+		<put-attribute name="title" value="Order Page" />
+		<put-attribute name="body" value="/WEB-INF/view/pages/order.ftl"
+			type="freemarker" />
+	</definition>
+	
+	<!-- Admin layout -->
+	<definition name="adminPage" 
+		template="/WEB-INF/view/elements/admin/default.ftl" templateType="freemarker">
+	</definition>
+
+	<definition name="listOrderPage"
+		template="/WEB-INF/view/elements/admin/orders/list-order.ftl" templateType="freemarker">
+	</definition>
+
+	<definition name="userManagePage"
+		template="/WEB-INF/view/elements/admin/users/manage-user.ftl" templateType="freemarker">
+	</definition>
+	
+	<definition name="coffeeManagePage"
+		template="/WEB-INF/view/elements/admin/coffee/manage-coffee.ftl" templateType="freemarker">
+	</definition>
+	
+	<definition name="condimentManagePage"
+		template="/WEB-INF/view/elements/admin/condiment/manage-condiment.ftl" templateType="freemarker">
+	</definition>
+	
+	<definition name="statisticPage"
+		template="/WEB-INF/view/elements/admin/statistic/statistic.ftl" templateType="freemarker">
+	</definition>
+</tiles-definitions>  

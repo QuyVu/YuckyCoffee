@@ -1,0 +1,65 @@
+.btn-coffee {
+  color: #fff;
+  background-color: #795548;
+  border-color: #6D4C41;
+}
+.btn-coffee:focus,
+.btn-coffee.focus {
+  color: #fff;
+  background-color: #5D4037;
+  border-color: #211512;
+}
+.btn-coffee:hover {
+  color: #fff;
+  background-color: #5D4037;
+  border-color: #4E342E;
+}
+.btn-coffee:active,
+.btn-coffee.active,
+.open > .dropdown-toggle.btn-coffee {
+  color: #fff;
+  background-color: #5D4037;
+  border-color: #4E342E;
+}
+.btn-coffee:active:hover,
+.btn-coffee.active:hover,
+.open > .dropdown-toggle.btn-coffee:hover,
+.btn-coffee:active:focus,
+.btn-coffee.active:focus,
+.open > .dropdown-toggle.btn-coffee:focus,
+.btn-coffee:active.focus,
+.btn-coffee.active.focus,
+.open > .dropdown-toggle.btn-coffee.focus {
+  color: #fff;
+  background-color: #4E342E;
+  border-color: #211512;
+}
+.btn-coffee:active,
+.btn-coffee.active,
+.open > .dropdown-toggle.btn-coffee {
+  background-image: none;
+}
+.btn-coffee.disabled:hover,
+.btn-coffee[disabled]:hover,
+fieldset[disabled] .btn-coffee:hover,
+.btn-coffee.disabled:focus,
+.btn-coffee[disabled]:focus,
+fieldset[disabled] .btn-coffee:focus,
+.btn-coffee.disabled.focus,
+.btn-coffee[disabled].focus,
+fieldset[disabled] .btn-coffee.focus {
+  background-color: #795548;
+  border-color: #6D4C41;
+}
+.btn-coffee .badge {
+  color: #795548;
+  background-color: #fff;
+}
+.coffee-name {
+	margin-left:20px;
+	width:150px:
+}
+thead{
+	color: #fff;
+	background: #337ab7;
+}

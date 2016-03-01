@@ -1,0 +1,111 @@
+
+.navbar-custom, .footer {
+	margin: 0px auto;
+	background-color: #6f5499 !important;
+	color: white !important;
+	padding: 1px;
+}
+
+.form-control {
+	display: inline !important;
+	margin-bottom: 5px;
+}
+
+.main {
+	overflow: hidden;
+	padding-left: 50px;
+	margin-top: 50px;
+	min-height: 200px;
+	background-color: #e2e2e2;
+}
+
+.leftPane, .rightPane {
+	padding-bottom: 1000px;
+	margin-bottom: -1000px;
+	float: left;
+}
+
+.leftPane {
+	background-color: #f1f1f1;
+	width: 160px;
+	height: 100%;
+	min-height: 400px;
+}
+
+.rightPane {
+	padding-left: 10px;
+	height: 100%;
+	min-height: 400px;
+}
+
+.navbar-login {
+	width: 305px;
+	padding: 10px;
+	padding-bottom: 0px;
+}
+
+.navbar-login-session {
+	padding: 10px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+
+.navbar, .dropdown-menu {
+	background: #6f5499;
+	border: none;
+}
+
+.navbar a:hover,
+.navbar a:focus,
+.open>a {
+  background-color: #513e73 !important;
+}
+
+.navbar a, 
+.dropdown-menu>li>a, 
+.dropdown-menu>li>a:focus,
+.dropdown-menu>li>a:hover, 
+.navbar-toggle {
+	color: #fff;
+}
+
+.icon-size {
+	font-size: 87px;
+}
+
+#body {
+	padding-top: 20px;
+	width: 100%
+}
+
+#noticeDiv {
+	margin-top: 10px;
+	min-height: 52px;
+	max-width: 50%;
+}
+
+#container {
+	width: 400px;
+	height: 400px;
+	position: relative;
+	background: yellow;
+	margin-bottom: 20px;
+}
+
+#animate {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	background-color: red;
+}
+
+.login-fail {
+	padding: 15px;
+	margin: 15px;
+	margin-bottom: 0px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}

@@ -1,0 +1,32 @@
+		// validate price before insert into db
+		if (isValidOrderPrice(order, cupList)) {
+			int orderID = orderDAO.addOrder(order.getUserName(), order.getPurchaseTime(), order.getTotal());
+			order.setOrderID(orderID);
+			response = 1;
+		} else {
+			return response;
+		}
+
+		// insert cup into db
+		for (Cup tmp : cupList) {
+			cupDAO.addCup(order.getOrderID(), tmp.getCoffeeID(), tmp.getSize(), tmp.getCondiments(), tmp.getPrice());
+		}
+		cupList.clear();
+		response = 1;
+		
+		
+		
+
+	@RequestMapping(value = "/submit-cup", method = RequestMethod.POST)
+	public @ResponseBody Integer getCup(@RequestBody Cup cup) {
+		cupList.add(cup);
+		System.out.println("============");
+		for (Cup tmp : cupList) {
+			String sendBack = "coffeeid: " + tmp.getCoffeeID() + "\ncupid: " + tmp.getCupID() + "\norderid: "
+					+ tmp.getOrderID() + "\ncondiments: " + tmp.getCondiments() + "\nsize: " + tmp.getSize()
+					+ "\nprice: " + tmp.getPrice() + "\n";
+			System.out.println(sendBack);
+		}
+		System.out.println("============");
+		return 1;
+	}
