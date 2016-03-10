@@ -22,4 +22,6 @@
     </div>
 </div>
 
-<#include "/WEB-INF/view/elements/shared/update-password.ftl">
+<#include "/WEB-INF/view/shared/update-password.ftl">
+<#include "/WEB-INF/view/shared/confirm-modal.ftl">
+<#include "/WEB-INF/view/shared/response-modal.ftl">

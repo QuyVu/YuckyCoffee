@@ -55,7 +55,7 @@
 
 	<!-- /.row -->
 	<div class="row">
-		<div class="panel panel-primary">
+		<div id="chart-panel" class="panel panel-primary">
 			<div class="panel-heading">
 				<i class="fa fa-bar-chart"></i> Orders Chart
 			</div>
@@ -78,7 +78,7 @@
     				</div>
     			</div>
     			
-				<canvas id="myChart" width="1000" height="400"></canvas>
+				<canvas id="myChart" width="1000" height="400" style="display:none"></canvas>
 			</div>
 			<!-- /.panel-body -->
 		</div>

@@ -46,6 +46,13 @@ public class CoffeeDAO extends JdbcDaoSupport {
 		}
 	};
 
+	public String getNamebyID(int coffeeID) {
+		String sql = "SELECT name FROM coffees WHERE coffees_id=?";
+		Object[] params = new Object[] { coffeeID };
+		String coffeeName = this.getJdbcTemplate().queryForObject(sql, params, String.class);
+		return coffeeName;
+	}
+
 	public double getPriceByID(int coffeeID) {
 		String sql = "SELECT price FROM coffees WHERE coffees_id=?";
 		Object[] params = new Object[] { coffeeID };

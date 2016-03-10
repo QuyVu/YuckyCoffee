@@ -25,7 +25,7 @@ import com.quyvd.model.Order;
 import com.quyvd.model.OrderWrapper;
 
 @Controller
-@RequestMapping(value = "/order")
+@RequestMapping(value = "/seller")
 public class OrderController {
 
 	private Principal principal = new Principal();
@@ -45,29 +45,33 @@ public class OrderController {
 		model.addAttribute("listCoffee", listCoffee);
 		model.addAttribute("listCondiment", listCondiment);
 		user.addAttribute("user", principal.getPrincipal());
-		return "orderPage";
+		return "sellerPage";
 	}
 
 	@RequestMapping(value = "/submit-order", method = RequestMethod.POST)
 	public @ResponseBody Integer setOrder(@RequestBody OrderWrapper ow) {
 		List<Cup> cupList = ow.getCupArray();
 		Order order = new Order(principal.getPrincipal(), new Timestamp(ow.getPurchaseTime()), ow.getTotal());
-		return insertCup(order, cupList);
+		if (order.getTotal() == 0)
+			return -1;
+		else
+			return insertCup(order, cupList);
 	}
 
 	public Integer insertCup(Order order, List<Cup> cupList) {
 		// validate price before insert into db
 		Integer i = new Integer(0);
 		if (isValidOrderPrice(order, cupList)) {
+			i = 1;
 			int orderID = orderDAO.addOrder(order.getUserName(), order.getPurchaseTime(), order.getTotal());
 			order.setOrderID(orderID);
-			i = 1;
+			// insert cup into db
+			for (Cup tmp : cupList) {
+				cupDAO.addCup(order.getOrderID(), tmp.getCoffeeID(), tmp.getSize(), tmp.getCondiments(),
+						tmp.getPrice());
+			}
 		} else {
 			i = 0;
-		}
-		// insert cup into db
-		for (Cup tmp : cupList) {
-			cupDAO.addCup(order.getOrderID(), tmp.getCoffeeID(), tmp.getSize(), tmp.getCondiments(), tmp.getPrice());
 		}
 		return i;
 	}

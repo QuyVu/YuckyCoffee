@@ -47,8 +47,7 @@
     <!-- Custom JavaScript -->
     <script src="/YuckyCoffee/resources/js/admin-page/sb-admin-2.js"></script>
     <script src="/YuckyCoffee/resources/js/admin-page/datepicker.js"></script>
-    <!--script src="/YuckyCoffee/resources/js/admin-page/chart-example.js"></script-->
-    
+    <script src="/YuckyCoffee/resources/js/admin-page/cups.js"></script>
 </#macro>
 
 <#macro content>
@@ -58,10 +57,10 @@
 		</div>
 	</div>
 	<!-- /.row -->
-	<div class="row">
-		<div class="col-lg-12"> 
-			<#include "/WEB-INF/view/elements/admin/orders/select-time.ftl"> 
+	<div class="row"> 
+		<div class="row"> 
 			<#include "/WEB-INF/view/elements/admin/orders/order-datatable.ftl">
+			<#include "/WEB-INF/view/elements/admin/orders/cup-datatable.ftl">
 		</div>
 	</div>
 	<!-- /.row -->

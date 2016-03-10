@@ -6,6 +6,7 @@
 <title><@tiles.insertAttribute name="title" /></title>
 <link rel='stylesheet' href='resources/bower_components/font-awesome/css/font-awesome.min.css'>
 <link rel='stylesheet' href='resources/bower_components/bootstrap/dist/css/bootstrap.min.css'>
+<link rel='stylesheet' href='resources/bower_components/datatables/media/css/dataTables.bootstrap.min.css'>
 <link rel='stylesheet' href='resources/css/shared/custom.css'>
 <link rel='stylesheet' href='resources/css/shared/tab.css'>
 <link rel='stylesheet' href='resources/css/seller-page/ordering.css'>
@@ -20,7 +21,10 @@
 	<@tiles.insertAttribute name="footer" />
 </body>
 <script src="resources/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>    
+<script src="resources/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="resources/bower_components/datatables/media/js/dataTables.bootstrap.min.js"></script>
 <script src="resources/js/shared/update-password.js"></script>
 <script src="resources/js/seller-page/ordering.js"></script>
+<script src="resources/js/seller-page/confirm-order.js"></script>
 </html>

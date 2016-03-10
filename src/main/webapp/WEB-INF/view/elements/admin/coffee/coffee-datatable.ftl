@@ -1,6 +1,6 @@
 <#ftl encoding='UTF-8'>
 <div class="panel panel-primary">
-	<div class="panel-heading">Users Table</div>
+	<div class="panel-heading">Coffees Table</div>
 	<!-- /.panel-heading -->
 	<div class="panel-body">
 		<div class="dataTable_wrapper">
@@ -17,7 +17,7 @@
 				</thead>
 				<tbody>
 					<#list model["coffees"] as coffee>
-					<tr>
+					<tr style="background-color: #${coffee.enabled?string('DCEDC8','FFECB3')}">
 						<td class="text-center">${coffee.coffeeID}</td>
 						<td id="coffee-name-${coffee.coffeeID}" class="coffee-name">
 							<p id="p-name-${coffee.coffeeID}">${coffee.coffeeName}</p> 
@@ -32,9 +32,7 @@
 						</td>
 						<td>
 							<p id="p-stt-${coffee.coffeeID}">
-								<#if coffee.enabled == true>Available 
-								<#else>Unavailable 
-								</#if>
+								${coffee.enabled?string('Available','Unavailable')}
 							</p> 
 							<select id="select-stt-${coffee.coffeeID}" class="select-stt form-control" style="display: none">
 								<option value="true">Available</option>

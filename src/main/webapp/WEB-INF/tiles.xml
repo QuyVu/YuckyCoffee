@@ -17,19 +17,19 @@
 	</definition>
 
 	<!-- Base Layout -->
-	<definition name="baseLayout" template="/WEB-INF/view/static/layout.ftl"
+	<definition name="baseLayout" template="/WEB-INF/view/elements/seller/layout.ftl"
 		templateType="freemarker">
-		<put-attribute name="header" value="/WEB-INF/view/static/header.ftl"
+		<put-attribute name="header" value="/WEB-INF/view/elements/seller/header.ftl"
 			type="freemarker" />
 		<put-attribute name="title" value="Sample Title" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/WEB-INF/view/static/footer.ftl"
+		<put-attribute name="footer" value="/WEB-INF/view/elements/seller/footer.ftl"
 			type="freemarker" />
 	</definition>
 
-	<definition name="orderPage" extends="baseLayout">
-		<put-attribute name="title" value="Order Page" />
-		<put-attribute name="body" value="/WEB-INF/view/pages/order.ftl"
+	<definition name="sellerPage" extends="baseLayout">
+		<put-attribute name="title" value="Seller Page" />
+		<put-attribute name="body" value="/WEB-INF/view/pages/seller.ftl"
 			type="freemarker" />
 	</definition>
 	

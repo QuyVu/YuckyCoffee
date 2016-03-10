@@ -74,6 +74,11 @@ $(function() {
 $("button#search-order").click(function(){
 	day.splice(0,day.length);
 	total.splice(0,total.length);
+	$('canvas#myChart').css("width","1000px");
+	$('canvas#myChart').css("height","400px");
+	$('canvas#myChart').css("display","inline");
+	$('canvas#myChart').attr("width","1000px");
+	$('canvas#myChart').attr("height","400px");
 	$.ajax({
 		type : "POST",
 		url : "order-by-month",

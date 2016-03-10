@@ -6,7 +6,7 @@ var order = {
 var OrderWrapper = {
 	purchaseTime : 0,
 	total : 0,
-	cupArray: []
+	cupArray : []
 }
 
 var coffee = {
@@ -23,6 +23,7 @@ function Condiment(id, name, price, enabled) {
 };
 
 var cupArray = [];
+var cArray = [];
 
 var cup = {
 	cupID : 0,
@@ -137,23 +138,8 @@ $("td#added-condiments").on(
 			$("td#cup-price").text(parseFloat(cup.price) + " $");
 		});
 
-// Submit Cup Info to Server using AJAX
-$("button#apply-cup").click(function() {
-	// Prevent the form from submitting via the browser.
-	if (cup.coffeeID != 0 && cup.size != "") {
-		applyCup();
-		appendCheckTable();
-		$("a#selected-coffee").text("");
-		$("span#cup-size").text("");
-		$("td#cup-price").text("");
-		$("p.added-condiment").remove();
-		$("button.btn-add-condiment").prop("disabled", false);
-		resetCup();
-	} else
-		alert("You must chose coffee and size");
-});
-
 var condiments;
+
 function applyCup() {
 	condiments = "";
 	for (key in hashCondiment) {
@@ -177,29 +163,32 @@ function appendCheckTable() {
 	var str = "<tr id=\"cup-row\">" + "<td>" + coffee.name + "</td>" + "<td>"
 			+ cup.size + "</td>" + "<td>" + condiments + "</td> " + "<td>"
 			+ cup.price + "</td>" + "</tr>";
-
 	$("tbody#tableCheckOrder").append(str);
+	var letterCup = {coffeeName:coffee.name,size:cup.size,condiment:condiments,price:cup.price};
+	cArray.push(letterCup);
 }
 
-// Delete the cup
-$("button#delete-cup").click(function() {
-	resetCup();
-});
-
-// Submit Cup Info to Server using AJAX
-$("button#applyOrder").click(function(event) {
-	// Prevent the form from submitting via the browser.
-	event.preventDefault();
-	if (order.price != 0) {
-		order.purchaseTime = new Date().getTime();
-		console.log(order.purchaseTime);
-		applyOrder();
-		console.log(order);
-		cupArray = [];
-		resetOrder();
-	} else
-		alert("This order is empty!");
-});
+function responseSuccess() {
+	str = '<h3>Succsess!!!</h3>'+'<table class="table table-striped table-bordered"'
+			+ 'id="response-cups-table">' + '<thead>' + '<tr>'
+			+ '<th class="col-md-2">Coffee</th>' + '<th class="col-md-2">Size</th>'
+			+ '<th class="col-md-6">Condiments</th>' + '<th class="col-md-2">Price ($)</th>'
+			+ '</tr>' + '</thead>' + '<tbody id="cups-tbody">' + '</tbody>'
+			+ '</table>';
+	$("#response-modal #response-body").html(str);
+		var table = $('#response-cups-table').DataTable({
+			responsive : true,
+			paging : false,
+			info: false,
+			searching : false
+		});
+	for (i = 0; i < cArray.length; i++)
+		table.row.add([cArray[i].coffeeName,
+						cArray[i].size,
+						cArray[i].condiment,
+						cArray[i].price]).draw();
+	
+}
 
 function applyOrder() {
 	console.log(JSON.stringify(OrderWrapper));
@@ -208,14 +197,26 @@ function applyOrder() {
 	OrderWrapper.cupArray = cupArray;
 	$.ajax({
 		type : "POST",
-		url : "order/submit-order",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
+		url : "seller/submit-order",
+		contentType : "application/json; charset=utf-8",
+		dataType : "json",
 		timeout : 100000,
 		data : JSON.stringify(OrderWrapper),
 		success : function(result) {
-			if (result == 1)
-				alert("success");
+			if (result == 1) {
+				responseSuccess();
+				$("#response-modal").modal();	
+			} 
+			else if (result == 0) {
+				str = '<h3>Invalid order price</h3>'
+				$("div#response-body").append(str);
+				$("#response-modal").modal();	
+			}
+			else {
+				str = '<h3>This order is empty</h3>'
+				$("div#response-body").append(str);
+				$("#response-modal").modal();	
+			}
 		},
 		error : function(result) {
 			alert(result);
@@ -223,6 +224,56 @@ function applyOrder() {
 	});
 };
 
+function submitOrder() {
+	order.purchaseTime = new Date().getTime();
+	console.log(order.purchaseTime);
+	applyOrder();
+	console.log(order);
+	cupArray = [];
+	resetOrder();
+}
+
+//Submit Cup Info to Server using AJAX
+$("button#applyOrder").click(function(event) {
+	// Prevent the form from submitting via the browser.
+	event.preventDefault();
+	str = '<h3>Are You sure to submit this order</h3>';
+	$("div#confirm-body").append(str);
+	$("#confirm-modal").modal();
+});
+
+$('button#accept-action').click(function() {
+	submitOrder();
+});
+
+$('button#deny-action').click(function() {
+	$("div#confirm-body").children().remove();
+});
+
+//Submit Cup Info to Server using AJAX
+$("button#apply-cup").click(function() {
+	if (cup.coffeeID != 0 && cup.size != "") {
+		applyCup();
+		appendCheckTable();
+		$("a#selected-coffee").text("");
+		$("span#cup-size").text("");
+		$("td#cup-price").text("");
+		$("p.added-condiment").remove();
+		$("button.btn-add-condiment").prop("disabled", false);
+		resetCup();
+	} else
+		alert("You must chose coffee and size");
+});
+
+//Delete the cup
+$("button#delete-cup").click(function() {
+	resetCup();
+});
+
 $("button#rejectOrder").click(function() {
+	window.location.reload();
+})
+
+$("button#close-modal").click(function() {
 	window.location.reload();
 })

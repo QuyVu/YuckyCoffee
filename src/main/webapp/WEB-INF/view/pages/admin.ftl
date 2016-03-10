@@ -71,7 +71,7 @@
         	<!-- Navigation -->
 			<@navbar/>
 		
-            <#include "/WEB-INF/view/elements/shared/update-password.ftl">
+            <#include "/WEB-INF/view/shared/update-password.ftl">
 			<!-- page-wrapper -->
         	<div id="page-wrapper">
         		<@content/>

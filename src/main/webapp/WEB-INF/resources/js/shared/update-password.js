@@ -43,6 +43,7 @@ function updatePassword(curP, newP) {
 				$("div#notification").removeClass("alert-danger");
 				$("div#notification").addClass("alert-success");
 				$("div#notification").html(str);
+				setInterval(logout, 1500);
 			}
 		},
 		error : function(result) {
@@ -52,18 +53,29 @@ function updatePassword(curP, newP) {
 };
 
 $("button#update-pass").click(function() {
-	if(newPass != repeat) {
+	if (newPass != repeat) {
 		var str = "<strong>your confirm input is not match</strong>";
 		$("div#notification").show();
 		$("div#notification").removeClass("alert-success");
 		$("div#notification").addClass("alert-danger");
 		$("div#notification").html(str);
-	}
-	else {
-		updatePassword(curPass,newPass);
+	} else if (curPass == "" || newPass == "" || repeat == "") {
+		var str = "<strong>Some fields are empty!!!</strong>";
+		$("div#notification").show();
+		$("div#notification").removeClass("alert-success");
+		$("div#notification").addClass("alert-danger");
+		$("div#notification").html(str);
+	} else {
+		updatePassword(curPass, newPass);
 	}
 });
 
 $("button#reject").click(function() {
 	window.location.reload();
 });
+
+function logout() {
+	$.get("/YuckyCoffee/logout", function() {
+	});
+	window.location.reload();
+}

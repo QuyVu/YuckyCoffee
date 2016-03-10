@@ -14,13 +14,13 @@ $(function() {
 	$('#datetimepicker1').datetimepicker({
 		locale: 'ja',
 		useCurrent : false,
-		format: 'LL'
+		format: 'L'
 	});
 	
 	$('#datetimepicker2').datetimepicker({
 		locale: 'ja',
 		useCurrent : false,
-		format: 'LL'
+		format: 'L'
 	});
 	
 	$("#datetimepicker1").on("dp.change", function(e) {

@@ -352,3 +352,10 @@ table.dataTable thead .sorting:after {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+.table-hover>tbody>tr:hover.selected {
+	background-color: rgba(0, 90, 205, 0.3);
+}
+.table-hover>tbody>tr.selected {
+	background-color: rgba(0, 90, 205, 0.3);
+}

@@ -18,24 +18,14 @@
 				</thead>
 				<tbody>
 					<#list model["users"] as acc>
-					<tr>
+					<tr style="background-color:#${acc.enabled?string('DCEDC8','FFECB3')}">
 						<td>${acc.userName}</td>
 						<td>${acc.role}</td> 
-						<#if acc.enabled == true>
-							<td>available</td> 
-						<#else>
-							<td>locked</td> 
-						</#if>
+						<td>${acc.enabled?string('Available','Unavailable')}</td> 
 						<td class="text-center">
-						<#if acc.enabled == true>
-							<button id="lock-user" style="width:80px" class="btn btn-warning btn-sm" href="#" value="${acc.userName}"> 
-								<i class="fa fa-lock"></i> Deactive
+							<button id="${acc.enabled?string('lock-user','unlock-user')}" style="width:80px" class="btn btn-default btn-sm" value="${acc.userName}">
+								<i class="fa fa-lock"></i> ${acc.enabled?string('Lock','Unlock')}
 							</button>
-						<#else>
-							<button id="unlock-user" style="width:80px" class="btn btn-success btn-sm" href="#" value="${acc.userName}"> 
-								<i class="fa fa-unlock"></i> Active
-							</button>
-						</#if>
 						</td>
 					</tr>
 					</#list>

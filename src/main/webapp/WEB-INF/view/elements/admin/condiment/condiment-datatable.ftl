@@ -1,6 +1,6 @@
 <#ftl encoding='UTF-8'>
 <div class="panel panel-primary">
-	<div class="panel-heading">Users Table</div>
+	<div class="panel-heading">Condiments Table</div>
 	<!-- /.panel-heading -->
 	<div class="panel-body">
 		<div class="dataTable_wrapper">
@@ -16,7 +16,7 @@
 				</thead>
 				<tbody>
 					<#list model["condiments"] as condiment>
-					<tr>
+					<tr style="background-color: #${condiment.enabled?string('DCEDC8','FFECB3')}">
 						<td class="text-center">${condiment.condimentID}</td>
 						<td id="condiment-name-${condiment.condimentID}" class="condiment-name">
 							<p id="p-name-${condiment.condimentID}">${condiment.condimentName}</p>
@@ -28,9 +28,7 @@
 						</td> 
 							<td>
 								<p id="p-stt-${condiment.condimentID}">
-									<#if condiment.enabled == true>Available
-									<#else>Unavailable	
-									</#if> 
+									${condiment.enabled?string('Available','Unavailable')}
 								</p> 
 								<select id="select-stt-${condiment.condimentID}" class="select-stt form-control" style="display: none">
 									<option value="true">Available</option>

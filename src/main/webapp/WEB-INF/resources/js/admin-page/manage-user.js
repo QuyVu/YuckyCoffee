@@ -4,6 +4,9 @@ var user = {
 	role : "",
 	enabled : true
 };
+
+var action;
+
 function autoCloseModal() {
 	setTimeout(function() {
 		$("#response-modal").modal('hide');
@@ -86,7 +89,7 @@ function applyNewUser() {
 	});
 };
 
-function updateUser(name, action) {
+function updateUser(name, act) {
 
 	$.ajax({
 		type : "POST",
@@ -94,7 +97,7 @@ function updateUser(name, action) {
 		timeout : 100000,
 		data : {
 			username : name,
-			action : action
+			action : act
 		},
 		success : function(result) {
 			if (result == 0) {
@@ -116,13 +119,21 @@ function updateUser(name, action) {
 	});
 };
 
+function confirmNewUser(){
+	action = "addUser";
+	var str = "<h3>Are you sure you want to add user "
+		+ user.userName + " ?</h3>"
+	$("div#confirm-body").append(str);
+	$("#confirm-modal").modal();
+}
+
 $("button#close-modal").click(function() {
 	window.location.reload();
 });
 
 $("button#submitUser").click(function() {
 	if (validateNewUser()) {
-		applyNewUser();
+		confirmNewUser();
 	} else {
 		var str = "<h3>Input error!!!</h3>";
 		$("div#response-body").append(str);
@@ -131,33 +142,30 @@ $("button#submitUser").click(function() {
 	}
 });
 
-$("button#unlock-user").click(
-		function() {
-			$("button#accept-action").val("active");
-			user.userName = $(this).val();
-			$("#confirm-modal").modal();
-			var str = "<h3>Are you sure you want to active user "
-					+ user.userName + " ?</h3>"
-			$("div#confirm-body").append(str);
-		});
+$("button#unlock-user").click(function() {
+	action = "active"
+	user.userName = $(this).val();
+	var str = "<h3>Are you sure you want to active user "
+		+ user.userName + " ?</h3>"
+	$("div#confirm-body").append(str);
+	$("#confirm-modal").modal();
+});
 
-$("button#lock-user").click(
-		function() {
-			$("button#accept-action").val("deactive");
-			user.userName = $(this).val();
-			$("#confirm-modal").modal();
-			var str = "<h3>Are you sure you want to deactive user "
-					+ user.userName + " ?</h3>"
-			$("div#confirm-body").append(str);
-		});
+$("button#lock-user").click(function() {
+	action = "deactive"
+	user.userName = $(this).val();
+	var str = "<h3>Are you sure you want to deactive user "
+		+ user.userName + " ?</h3>"
+	$("div#confirm-body").append(str);
+	$("#confirm-modal").modal();
+});
 
 $("button#accept-action").click(function() {
-	console.log($(this).val());
-	if ($(this).val() == "active") {
-		updateUser(user.userName, "active")
-	} else {
-		updateUser(user.userName, "deactive")
-	}
+	console.log(action);
+	if(action=="addUser") {
+		applyNewUser();
+	} else
+		updateUser(user.userName, action);
 });
 
 $("button#deny-action").click(function() {

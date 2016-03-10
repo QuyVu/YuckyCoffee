@@ -5,18 +5,20 @@ var condiment = {
 	enabled : true
 };
 
+var action;
+
 function setCondiment(id, name, price) {
 	condiment.condimentID = id;
 	condiment.condimentName = name;
 	condiment.condimentPrice = parseFloat(price);
 }
 function autoCloseModal() {
-	setTimeout(function(){ 
-		$("#response-modal").modal('hide'); 
-		$("div#response-body").children().remove(); 
+	setTimeout(function() {
+		$("#response-modal").modal('hide');
+		$("div#response-body").children().remove();
 		window.location.reload();
 	}, 1500);
-} 
+}
 
 function validateNewCondiment() {
 	if (condiment.condimentName == "") {
@@ -26,6 +28,20 @@ function validateNewCondiment() {
 	} else {
 		return true;
 	}
+}
+
+function confirmCondiment(act) {
+	if (act == "addCondiment") {
+		action = "addCondiment";
+		var str = "<h3 id=\"response-content\">Are you sure you want to add condiment: "
+				+ condiment.condimentName + "</h3>";
+	} else if (action = "update") {
+		action = "updateCondiment";
+		var str = "<h3 id=\"response-content\">Are you sure you want to update condiment: "
+				+ condiment.condimentName + "</h3>";
+	}
+	$("div#confirm-body").append(str);
+	$("#confirm-modal").modal();
 }
 
 function applyNewCondiment() {
@@ -56,7 +72,7 @@ function applyNewCondiment() {
 	});
 };
 
-//Edit Condiment
+// Edit Condiment
 function updateCondiment() {
 	$.ajax({
 		type : "POST",
@@ -85,7 +101,7 @@ function updateCondiment() {
 	});
 };
 
-function displayElement(action,id){
+function displayElement(action, id) {
 	if (action == "edit") {
 		$("button#save-condiment-" + id).show();
 		$("button#cancel-edit-" + id).show();
@@ -106,14 +122,21 @@ function displayElement(action,id){
 		$("select#select-stt-" + id).hide();
 		$("button.edit-condiment").prop("disabled", false);
 	}
-} 
+}
+
+$('button#accept-action').click(function() {
+	if (action == "addCondiment")
+		applyNewCondiment();
+	else
+		updateCondiment();
+});
 
 $("select#select-enabled").change(function() {
-    var str = "";
-    $( "select#select-enabled option:selected" ).each(function() {
-      str = $(this).val();
-    });
-	if (str=="true") {
+	var str = "";
+	$("select#select-enabled option:selected").each(function() {
+		str = $(this).val();
+	});
+	if (str == "true") {
 		condiment.enabled = true;
 	} else {
 		condiment.enabled = false;
@@ -124,7 +147,7 @@ $("button#submit-condiment").click(function() {
 	condiment.condimentName = $("#new-name").val();
 	condiment.condimentPrice = parseFloat($("#new-price").val());
 	if (validateNewCondiment()) {
-		applyNewCondiment();
+		confirmCondiment("addCondiment");
 	} else {
 		var str = "<h3>Input error!!!</h3>";
 		$("div#response-body").append(str);
@@ -139,25 +162,26 @@ $("button#close-modal").click(function() {
 
 $("button.edit-condiment").click(function() {
 	$(this).hide();
-	displayElement("edit",$(this).val());
+	displayElement("edit", $(this).val());
 });
 
 $("button.save-condiment").click(function() {
-	if($("select#select-stt-" + $(this).val() + " option:selected").val()=="true") {
+	if ($("select#select-stt-" + $(this).val() + " option:selected").val() == "true") {
 		condiment.enabled = true;
-	}
-	else {
+	} else {
 		condiment.enabled = false;
 	}
-	setCondiment(parseInt($(this).val()),$("input#input-name-" + $(this).val()).val(),$("input#input-price-" + $(this).val()).val());
+	setCondiment(parseInt($(this).val()), $(
+		"input#input-name-" + $(this).val()).val(), $(
+		"input#input-price-" + $(this).val()).val());
 	$(this).hide();
 	$("button#cancel-edit-" + $(this).val()).hide();
-	displayElement("save",$(this).val());
-	updateCondiment();
+	displayElement("save", $(this).val());
+	confirmCondiment("updateCondiment");
 });
 
 $("button.cancel-edit").click(function() {
 	$(this).hide();
 	$("button#save-condiment-" + $(this).val()).hide();
-	displayElement("cancel",$(this).val());
+	displayElement("cancel", $(this).val());
 });

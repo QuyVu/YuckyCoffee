@@ -9,7 +9,7 @@
 
 	<http auto-config="true"  use-expressions="true">
 		<intercept-url pattern="/login" access="isAnonymous()" />
-		<intercept-url pattern="/order" access="hasRole('ROLE_SELLER')" />
+		<intercept-url pattern="/seller" access="hasRole('ROLE_SELLER')" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/update-password" access="isAuthenticated()" />
 		<intercept-url pattern="/" access="isAuthenticated()" />

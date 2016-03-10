@@ -5,6 +5,8 @@ var coffee = {
 	enabled : true
 };
 
+var action;
+
 function setCoffee(id, name, price) {
 	coffee.coffeeID = id;
 	coffee.coffeeName = name;
@@ -86,6 +88,27 @@ function updateCoffee() {
 	});
 };
 
+function confirmCoffee(act) {
+	if (act == "addCoffee") {
+		action = "addCoffee";
+		var str = "<h3 id=\"response-content\">Are you sure you want to add coffee: "
+				+ coffee.coffeeName + "</h3>";
+	} else if (action = "updateCoffee") {
+		action = "updateCoffee";
+		var str = "<h3 id=\"response-content\">Are you sure you want to update coffee: "
+				+ coffee.coffeeName + "</h3>";
+	}
+	$("div#confirm-body").append(str);
+	$("#confirm-modal").modal();
+}
+
+$('button#accept-action').click(function() {
+	if (action == "addCoffee")
+		applyNewCoffee();
+	else
+		updateCoffee();
+});
+
 function displayElement(action,id){
 	if (action == "edit") {
 		$("button#save-coffee-" + id).show();
@@ -125,7 +148,7 @@ $("button#submit-coffee").click(function() {
 	coffee.coffeeName = $("#new-name").val();
 	coffee.coffeePrice = parseFloat($("#new-price").val());
 	if (validateNewCoffee()) {
-		applyNewCoffee();
+		confirmCoffee("addCoffee");
 	} else {
 		var str = "<h3>Input error!!!</h3>";
 		$("div#response-body").append(str);
@@ -147,10 +170,10 @@ $("button.save-coffee").click(function() {
 	if($("select#select-stt-" + $(this).val() + " option:selected").val()=="true") coffee.enabled = true;
 	else coffee.enabled = false;
 	setCoffee(parseInt($(this).val()),$("input#input-name-" + $(this).val()).val(),$("input#input-price-" + $(this).val()).val());
-	updateCoffee();
-	displayElement("save",$(this).val());
 	$(this).hide();
 	$("button#cancel-edit-" + $(this).val()).hide();
+	displayElement("save",$(this).val());
+	confirmCoffee("updateCoffee");
 });
 
 $("button.cancel-edit").click(function() {

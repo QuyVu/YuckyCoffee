@@ -3,9 +3,11 @@ package com.quyvd.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.jdbc.core.RowMapper;
+
 import com.quyvd.model.Cup;
 
-public class CupMapper {
+public class CupMapper implements RowMapper<Cup>{
 
 	public Cup mapRow(ResultSet resSet, int rowNum) throws SQLException {
 		int id = resSet.getInt("cups_id");

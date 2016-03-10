@@ -1,12 +1,17 @@
 package com.quyvd.dao;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.quyvd.model.Cup;
 
 @Service
 @Transactional
@@ -24,9 +29,17 @@ public class CupDAO extends JdbcDaoSupport {
 			return this.getJdbcTemplate().update(sql, params);
 		} catch (CannotGetJdbcConnectionException ex) {
 			return 0;
+		} catch (DataIntegrityViolationException ex){
+			return -1;
 		}
+		
 	};
 
-	public void getCupByID(int id) {
-	};
+	public List<Cup> selectCupByOrder(int orderID) {
+		String sql = "SELECT * FROM cups WHERE order_id = ?";
+		Object[] params = new Object[] {orderID};
+		CupMapper cupMapper = new CupMapper();
+		List<Cup> cups = this.getJdbcTemplate().query(sql, params, cupMapper);
+		return cups;
+	}
 }

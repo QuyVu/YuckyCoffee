@@ -45,6 +45,13 @@ public class CondimentDAO extends JdbcDaoSupport {
 		}
 	};
 	
+	public String getNameByID(int condimentID) {
+		String sql = "SELECT name FROM condiments WHERE condiments_id=?";
+		Object[] params = new Object[] {condimentID};
+		String name = this.getJdbcTemplate().queryForObject(sql, params, String.class);
+		return name;
+	}
+	
 	public double getPriceByID(int condimentID) {
 		String sql = "SELECT price FROM condiments WHERE condiments_id=?";
 		Object[] params = new Object[] {condimentID};

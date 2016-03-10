@@ -60,9 +60,9 @@
 						<i class="fa fa-plus"></i>
 						New Condiment
 					</button>
-					<#include "/WEB-INF/view/elements/admin/modal/response-modal.ftl">
+					<#include "/WEB-INF/view/shared/response-modal.ftl">
 					
-					<#include "/WEB-INF/view/elements/admin/modal/confirm-modal.ftl">
+					<#include "/WEB-INF/view/shared/confirm-modal.ftl">
 					
 					<#include "/WEB-INF/view/elements/admin/condiment/add-condiment-modal.ftl">
 					

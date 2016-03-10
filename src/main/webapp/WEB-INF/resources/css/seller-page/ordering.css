@@ -1,3 +1,11 @@
+html {
+    overflow-y:scroll;
+}
+
+.main {
+	min-height:522px;
+}
+
 .btn-coffee {
   color: #fff;
   background-color: #795548;

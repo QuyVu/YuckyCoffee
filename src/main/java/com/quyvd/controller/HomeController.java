@@ -35,7 +35,7 @@ public class HomeController {
 			role = a.getAuthority();
 		}
 		if (role.equals("ROLE_SELLER")) {
-			return "redirect:order";
+			return "redirect:seller";
 		} else if (role.equals("ROLE_ADMIN")) {
 			return "redirect:admin";
 		} else if (role.equals("ROLE_ANONYMOUS")) {
@@ -48,7 +48,7 @@ public class HomeController {
 	public String loginPage(@RequestParam(value = "error", required = false) String error, Model model) {
 		System.out.println(error);
 		if (error != null) {
-			model.addAttribute("error", "Invalid username and password!");
+			model.addAttribute("error", "Invalid username or password!");
 		}
 		return "loginPage";
 	}
