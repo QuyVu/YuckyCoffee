@@ -1,6 +1,15 @@
 var curPass = "";
 var newPass = "";
 var repeat = "";
+var lang = getCookie("lang");
+setLanguage(lang);
+	$("h4#modal-header").text(string.updatePassHeader);
+	$("label#label-cur").text(string.curPass);
+	$("label#label-new").text(string.newPass);
+	$("label#label-repeat").text(string.repeatPass);
+	$("button#update-pass").text(string.yesButton);
+	$("button#reject").text(string.noButton);
+
 
 $("a#updatePassword").click(function() {
 	$("#updatepw-modal").modal();
@@ -34,12 +43,12 @@ function updatePassword(curP, newP) {
 				$("div#notification").addClass("alert-danger");
 				$("div#notification").html(str);
 			} else if (result == -1) {
-				var str = "<strong>Current Password is incorrect</strong>";
+				var str = "<strong>" + string.wrongCur + "</strong>";
 				$("div#notification").removeClass("alert-success");
 				$("div#notification").addClass("alert-danger");
 				$("div#notification").html(str);
 			} else {
-				var str = "<strong>Success!!!</strong>";
+				var str = "<strong>" + string.success + "</strong>";
 				$("div#notification").removeClass("alert-danger");
 				$("div#notification").addClass("alert-success");
 				$("div#notification").html(str);
@@ -54,13 +63,13 @@ function updatePassword(curP, newP) {
 
 $("button#update-pass").click(function() {
 	if (newPass != repeat) {
-		var str = "<strong>your confirm input is not match</strong>";
+		var str = "<strong>" + string.wrongRepeat + "</strong>";
 		$("div#notification").show();
 		$("div#notification").removeClass("alert-success");
 		$("div#notification").addClass("alert-danger");
 		$("div#notification").html(str);
 	} else if (curPass == "" || newPass == "" || repeat == "") {
-		var str = "<strong>Some fields are empty!!!</strong>";
+		var str = "<strong>" + string.emptyField + "</strong>";
 		$("div#notification").show();
 		$("div#notification").removeClass("alert-success");
 		$("div#notification").addClass("alert-danger");

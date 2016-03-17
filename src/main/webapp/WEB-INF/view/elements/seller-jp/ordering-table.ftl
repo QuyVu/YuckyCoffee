@@ -3,10 +3,10 @@
 		<table class="table ordering">
 			<thead>
 				<tr>
-					<th class="coffee-name col-md-2"><span>Coffee</span></th>
-					<th class="col-md-2"><span>Size</span></th>
-					<th class="col-md-4"><span>Condiments</span></th>
-					<th class="col-md-2"><span>Price</span></th>
+					<th class="coffee-name col-md-2"><span>コーヒー</span></th>
+					<th class="col-md-2"><span>サイズ</span></th>
+					<th class="col-md-4"><span>調味料</span></th>
+					<th class="col-md-2"><span>価格</span></th>
 					<th class="col-md-2"></th>
 					
 				</tr>

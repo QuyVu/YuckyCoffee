@@ -4,7 +4,7 @@
 	<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Response</h4>
+				<h4 id="response-header" class="modal-title">Response</h4>
 			</div>
 			
 			<div id="response-body" class="modal-body">

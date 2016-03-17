@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.quyvd.config.Principal;
@@ -39,13 +40,17 @@ public class OrderController {
 	private CupDAO cupDAO;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String orderPage(@ModelAttribute("model") ModelMap model, Model user) {
+	public String orderPage(@RequestParam(value="language", required = false) String lang, @ModelAttribute("model") ModelMap model,
+			Model user) {
 		List<Coffee> listCoffee = coffeeDAO.listAvailableCoffee();
 		List<Condiment> listCondiment = condimentDAO.listAvailableCondiment();
 		model.addAttribute("listCoffee", listCoffee);
 		model.addAttribute("listCondiment", listCondiment);
 		user.addAttribute("user", principal.getPrincipal());
-		return "sellerPage";
+		if (lang!=null && lang.equals("jp"))
+			return "jpSellerPage";
+		else
+			return "sellerPage";
 	}
 
 	@RequestMapping(value = "/submit-order", method = RequestMethod.POST)

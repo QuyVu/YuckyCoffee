@@ -1,3 +1,5 @@
+var lang = getCookie("lang");
+
 var order = {
 	purchaseTime : 0,
 	total : 0
@@ -84,27 +86,47 @@ function selectCoffee(e) {
 
 // chose normal size for the cup
 $("button#btn-normal").click(function() {
-	if ($("span#cup-size").text() == "Large") {
+	if ($("span#cup-size").text() == "Large" || $("span#cup-size").text() == "大きい") {
 		cup.price = parseFloat(cup.price) - 1;
 		cup.size = "Normal";
-		$("span#cup-size").text("Normal");
+		if(lang=="jp")
+			$("span#cup-size").text("通常");
+		else if(lang=="vi")
+			$("span#cup-size").text("Vừa");
+		else
+			$("span#cup-size").text("Normal");
 		$("td#cup-price").text(parseFloat(cup.price) + " $");
 	} else {
 		cup.size = "Normal";
-		$("span#cup-size").text("Normal");
+		if(lang=="jp")
+			$("span#cup-size").text("通常");
+		else if(lang=="vi")
+			$("span#cup-size").text("Vừa");
+		else
+			$("span#cup-size").text("Normal");
 	}
 });
 
 // chose large size for the cup
 $("button#btn-large").click(function() {
-	if ($("span#cup-size").text() != "Large") {
+	if ($("span#cup-size").text() != "Large" || $("span#cup-size").text() != "大きい") {
 		cup.price = parseFloat(cup.price) + 1;
 		cup.size = "Large";
-		$("span#cup-size").text("Large");
+		if(lang=="jp")
+			$("span#cup-size").text("大きい");
+		else if(lang=="vi")
+			$("span#cup-size").text("Lớn");
+		else
+			$("span#cup-size").text("Large");
 		$("td#cup-price").text(parseFloat(cup.price) + " $");
 	} else {
 		cup.size = "Large";
-		$("span#cup-size").text("Large");
+		if(lang=="jp")
+			$("span#cup-size").text("大きい");
+		else if(lang=="vi")
+			$("span#cup-size").text("Lớn");
+		else
+			$("span#cup-size").text("Large");
 	}
 });
 
@@ -187,7 +209,6 @@ function responseSuccess() {
 						cArray[i].size,
 						cArray[i].condiment,
 						cArray[i].price]).draw();
-	
 }
 
 function applyOrder() {

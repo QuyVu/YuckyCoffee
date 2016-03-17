@@ -4,7 +4,7 @@
 	<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Modal Header</h4>
+				<h4 id="confirm-header" class="modal-title">Modal Header</h4>
 			</div>
 			
 			<div id="confirm-body" class="modal-body">

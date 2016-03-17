@@ -26,10 +26,26 @@
 		<put-attribute name="footer" value="/WEB-INF/view/elements/seller/footer.ftl"
 			type="freemarker" />
 	</definition>
+	
+	<!-- Japanese Base Layout -->
+	<definition name="jpBaseLayout" extends="baseLayout">
+		<put-attribute name="header" value="/WEB-INF/view/elements/seller-jp/header-jp.ftl"
+			type="freemarker" />
+		<put-attribute name="title" value="Sample Title" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/view/elements/seller/footer.ftl"
+			type="freemarker" />
+	</definition>
 
 	<definition name="sellerPage" extends="baseLayout">
 		<put-attribute name="title" value="Seller Page" />
 		<put-attribute name="body" value="/WEB-INF/view/pages/seller.ftl"
+			type="freemarker" />
+	</definition>
+
+	<definition name="jpSellerPage" extends="jpBaseLayout">
+		<put-attribute name="title" value="Seller Page" />
+		<put-attribute name="body" value="/WEB-INF/view/pages/seller-jp.ftl"
 			type="freemarker" />
 	</definition>
 	
