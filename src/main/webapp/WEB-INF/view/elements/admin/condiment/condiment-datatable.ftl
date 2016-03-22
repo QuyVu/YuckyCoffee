@@ -28,7 +28,7 @@
 						</td> 
 							<td>
 								<p id="p-stt-${condiment.condimentID}">
-									${condiment.enabled?string('Available','Unavailable')}
+									<#if condiment.enabled> <@spring.message "available"/><#else> <@spring.message "unavailable"/></#if>
 								</p> 
 								<select id="select-stt-${condiment.condimentID}" class="select-stt form-control" style="display: none">
 									<option value="true"><@spring.message "available"/></option>

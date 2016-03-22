@@ -15,7 +15,7 @@
 							<th class="col-md-4"><@spring.message "user.name"/></th>
 							<th class="col-md-4"><@spring.message "user.password"/></th>
 							<th class="col-md-2 text-center"><@spring.message "user.role"/></th>
-							<th class="col-md-2 text-center"><@spring.message "user.status"/></th>
+							<th class="col-md-2 text-center"><@spring.message "status"/></th>
 						</tr>
 					</thead>
 					<tbody>

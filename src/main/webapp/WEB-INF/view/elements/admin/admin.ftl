@@ -45,6 +45,18 @@
                         <li>
                             <a href="/YuckyCoffee/admin/condiment"><i class="fa fa-cutlery fa-fw"></i> <@spring.message "condiment"/></a>
                         </li>
+                            	
+            <li style="padding:15px; margin-left:0px; position:fixed; bottom:0px">
+  				<a class="flag">
+  					<img class="jp-lang" src="/YuckyCoffee/resources/image/jp.png" alt="Submit" height="30px" width="30px"></img>
+  				</a>
+  				<a class="flag">
+	  				<img class="us-lang" src="/YuckyCoffee/resources/image/us.png" alt="Submit" height="30px" width="30px"></img>
+				</a>
+  				<a class="flag">
+	  				<img class="vi-lang" src="/YuckyCoffee/resources/image/vi.png" alt="Submit" height="30px" width="30px"></img>
+				</a>
+  			</li>
                     </ul>
                 <!-- /.sidebar-collapse -->
             </div>
@@ -63,7 +75,15 @@
     	<meta name="description" content="">
     	<meta name="author" content="">
     	<title>Admin Page</title>
-		<@css/>    
+		<@css/>   
+    	<style>
+			.flag {
+    			display:inline!important;
+    			background-color:transparent!important;
+    			width:60px;
+    			padding:0px 0px!important;
+			}
+		</style> 
 	</head>
 	<body>
     	<div id="wrapper">
@@ -77,18 +97,6 @@
         		<@content/>
        		</div>
     	</div>
-    	
-            <div class="col-md-2" style="padding:15px; margin-left:0px; position:absolute">
-  				<a href="?language=jp">
-  					<img class="jp-lang" src="/YuckyCoffee/resources/image/jp.png" alt="Submit" height="20%" width="20%"></img>
-  				</a>
-  				<a href="?language=en">
-	  				<img class="us-lang" src="/YuckyCoffee/resources/image/us.png" href="?language=en" alt="Submit" height="20%" width="20%"></img>
-				</a>
-  				<a href="?language=vi">
-	  				<img class="vi-lang" src="/YuckyCoffee/resources/image/vi.png" href="?language=vi" alt="Submit" height="20%" width="20%"></img>
-				</a>
-  			</div>
 		<@script/>
     	<script src="/YuckyCoffee/resources/js/shared/update-password.js"></script>
 	</body>
