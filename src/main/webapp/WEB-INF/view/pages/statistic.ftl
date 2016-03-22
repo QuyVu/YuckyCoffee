@@ -1,5 +1,5 @@
 <#ftl encoding='UTF-8'>
-<#include "/WEB-INF/view/pages/admin.ftl">
+<#include "/elements/admin/admin.ftl">
 
 <#macro css>
     <!-- Bootstrap Core CSS -->
@@ -41,25 +41,52 @@
     <script src="/YuckyCoffee/resources/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     
     <!-- Custom JavaScript -->
+	<script src="/YuckyCoffee/resources/js/shared/string.js"></script>
+    <script src="/YuckyCoffee/resources/js/shared/change-lang.js"></script>
     <script src="/YuckyCoffee/resources/js/admin-page/sb-admin-2.js"></script>
-    <script src="/YuckyCoffee/resources/js/admin-page/default-page-chart.js"></script>
+    <script src="/YuckyCoffee/resources/js/admin-page/my-chart.js"></script>
     
 </#macro>
 
 <#macro content>
 	<div class="row">
-			<h1 class="page-header">
-				This Month
-				<button class="btn btn-primary btn-lg">Detail</button>
-			</h1>
-        <!-- /.col-lg-12 -->
+		<div class="col-lg-12">
+			<h1 class="page-header"><@spring.message "statistic.header"/></h1>
+		</div>
 	</div>
-	<div class="panel panel-default" style="background-color:#F7F7F9; border-color:transparent">
-  		<div class="panel-body">
-    		<canvas id="myChart" width="1000" height="400"></canvas>
-  		</div>
+
+	<!-- /.row -->
+	<div class="row">
+		<div id="chart-panel" class="panel panel-primary">
+			<div class="panel-heading">
+				<i class="fa fa-bar-chart"></i>　<@spring.message "statistic.title"/>
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="row">
+    				<h4 style="display: inline; float: left; margin-left: 15px"> <b><@spring.message "statistic.selectTime"/></b> </h4>
+    				<div class='col-md-4'>
+        				<div class="form-group">
+            				<div id='datetimepicker1' class='input-group date'>
+                				<input type='text' name="startDate" class="form-control" placeholder="Select Month"/>
+                				<span class="input-group-addon">
+                    				<span class="fa fa-calendar"></span>
+                				</span>
+            				</div>
+        				</div>
+    				</div>
+    				<div class='col-md-2'>
+    					<button id="search-order" class="btn btn-primary" style="width:100%"><@spring.message "search"/></button>
+    				</div>
+    			</div>
+    			
+				<canvas id="myChart" width="1000" height="400" style="display:none"></canvas>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
 	</div>
-	
+	<!-- /.row -->
 </#macro>
 
 <@display/>

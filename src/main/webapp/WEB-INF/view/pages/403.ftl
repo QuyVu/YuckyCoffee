@@ -107,6 +107,8 @@
 			</div>
 		</div>
 	</div>
+	<script src="resources/js/shared/string.js"></script>
+	<script src="resources/js/shared/change-lang.js"></script>
 	<script src="resources/js/2048/bind_polyfill.js"></script>
 	<script src="resources/js/2048/classlist_polyfill.js"></script>
 	<script src="resources/js/2048/animframe_polyfill.js"></script>

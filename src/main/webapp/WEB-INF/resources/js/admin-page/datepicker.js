@@ -6,6 +6,9 @@ var orderList = [];
 $(document).ready(function() {
     table=$('#order-table').DataTable({
         responsive: true,
+        language: {
+        	url: url
+        },
         searching: false
     });
 });

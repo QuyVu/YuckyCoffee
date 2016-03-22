@@ -14,10 +14,49 @@
 	<context:annotation-config />
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
-	<mvc:resources mapping="/favicon.ico" location="/WEB-INF/resources/image/favicon.ico" />
+	<mvc:resources mapping="/favicon.ico"
+		location="/WEB-INF/resources/image/favicon.ico" />
+
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath">
+			<value>/WEB-INF/view/</value>
+		</property>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="auto_import">spring.ftl as spring</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="cache" value="true" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl" />
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="language" />
+		<property name="defaultEncoding" value="UTF-8"/>
+	</bean>
+
 	<!-- Locale Config -->
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="en" />
+	</bean>	
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="lang" />
 	</bean>
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="localeChangeInterceptor" />
+			</list>
+		</property>
+	</bean>
+	
 </beans> 

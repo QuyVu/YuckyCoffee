@@ -7,6 +7,15 @@ var condiment = {
 
 var action;
 
+$(document).ready(function() {
+    $('#condimentTable').DataTable({
+            responsive: true,
+            language: {
+            	url: url
+            }
+    });
+});
+
 function setCondiment(id, name, price) {
 	condiment.condimentID = id;
 	condiment.condimentName = name;
@@ -33,12 +42,10 @@ function validateNewCondiment() {
 function confirmCondiment(act) {
 	if (act == "addCondiment") {
 		action = "addCondiment";
-		var str = "<h3 id=\"response-content\">Are you sure you want to add condiment: "
-				+ condiment.condimentName + "</h3>";
+		var str = "<h3 id=\"response-content\">" + string.confirmAddCondiment + "</h3>";
 	} else if (action = "update") {
 		action = "updateCondiment";
-		var str = "<h3 id=\"response-content\">Are you sure you want to update condiment: "
-				+ condiment.condimentName + "</h3>";
+		var str = "<h3 id=\"response-content\">" + string.confirmUpdateCondiment + "</h3>";
 	}
 	$("div#confirm-body").append(str);
 	$("#confirm-modal").modal();
@@ -54,13 +61,13 @@ function applyNewCondiment() {
 		data : JSON.stringify(condiment),
 		success : function(result) {
 			if (result == -1) {
-				var str = "<h3 id=\"response-content\">Cannot connect to database</h3>";
+				var str = "<h3 id=\"response-content\">" + string.connectDB +"</h3>";
 				$("div#response-body").append(str);
 			} else if (result == 0) {
-				var str = "<h3>this name already in use</h3>";
+				var str = "<h3>"+ string.existName +"</h3>";
 				$("div#response-body").append(str);
 			} else {
-				var str = "<h3>Success!!!</h3>";
+				var str = "<h3>"+ string.success +"</h3>";
 				$("div#response-body").append(str);
 			}
 			$("#response-modal").modal();
@@ -83,13 +90,13 @@ function updateCondiment() {
 		data : JSON.stringify(condiment),
 		success : function(result) {
 			if (result == 0) {
-				var str = "<h3>Update fail! This name already exists!</h3>";
+				var str = "<h3>"+ string.existName +"</h3>";
 				$("div#response-body").append(str);
 			} else if (result == -1) {
-				var str = "<h3>Cannot connect to database</h3>";
+				var str = "<h3>" + string.connectDB +"</h3>";
 				$("div#response-body").append(str);
 			} else {
-				var str = "<h3>Success!!!</h3>";
+				var str = "<h3>"+ string.success +"</h3>";
 				$("div#response-body").append(str);
 			}
 			$("#response-modal").modal();
@@ -149,7 +156,7 @@ $("button#submit-condiment").click(function() {
 	if (validateNewCondiment()) {
 		confirmCondiment("addCondiment");
 	} else {
-		var str = "<h3>Input error!!!</h3>";
+		var str = "<h3>"+ string.inputError +"</h3>";
 		$("div#response-body").append(str);
 		$("#response-modal").modal();
 		autoCloseModal();

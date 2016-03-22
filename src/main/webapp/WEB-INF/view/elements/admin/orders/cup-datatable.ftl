@@ -2,7 +2,7 @@
 <div class="col-md-6">
 <div class="panel panel-primary">
 	<div id="tb-heading" class="panel-heading">
-		<i class="fa fa-list fa-fw"></i> Cups
+		<i class="fa fa-list fa-fw"></i> <@spring.message "order.cupTable"/>
 	</div>
 	<!-- /.panel-heading -->
 
@@ -11,11 +11,11 @@
 			<table class="table table-striped table-bordered table-hover" id="cup-table">
 				<thead>
 					<tr>
-						<th class="col-md-1">CupID</th>
-						<th class="col-md-3">Coffee</th>
-						<th class="col-md-2">Size</th>
-						<th class="col-md-5">Condiments</th>
-						<th class="col-md-1 text-center" style="">Total($)</th>
+						<th class="col-md-1"><@spring.message "cup.id"/></th>
+						<th class="col-md-3"><@spring.message "coffee"/></th>
+						<th class="col-md-2"><@spring.message "size"/></th>
+						<th class="col-md-5"><@spring.message "condiments"/></th>
+						<th class="col-md-1 text-center" style=""><@spring.message "total"/></th>
 					</tr>
 				</thead>
 				<tbody id="cups-tbody">

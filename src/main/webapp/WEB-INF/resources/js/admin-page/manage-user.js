@@ -5,6 +5,15 @@ var user = {
 	enabled : true
 };
 
+$(document).ready(function() {
+    $('#userTable').DataTable({
+            responsive: true,
+            language: {
+            	url: url
+            }
+    });
+});
+
 var action;
 
 function autoCloseModal() {
@@ -71,13 +80,13 @@ function applyNewUser() {
 		data : JSON.stringify(user),
 		success : function(result) {
 			if (result == 0) {
-				var str = "<h3 id=\"response-content\">Cannot connect to database</h3>";
+				var str = "<h3 id=\"response-content\">" + string.connectDB +"</h3>";
 				$("div#response-body").append(str);
 			} else if (result == -1) {
-				var str = "<h3>username already in use</h3>";
+				var str = "<h3>"+ string.existName +"</h3>";
 				$("div#response-body").append(str);
 			} else {
-				var str = "<h3>Success!!!</h3>";
+				var str = "<h3>"+ string.success +"</h3>";
 				$("div#response-body").append(str);
 			}
 			$("#response-modal").modal();
@@ -104,10 +113,10 @@ function updateUser(name, act) {
 				var str = "<h3>Username does not exist</h3>";
 				$("div#response-body").append(str);
 			} else if (result == -1) {
-				var str = "<h3>Cannot connect to database</h3>";
+				var str = "<h3>" + string.connectDB +"</h3>";
 				$("div#response-body").append(str);
 			} else {
-				var str = "<h3>Success!!!</h3>";
+				var str = "<h3>"+ string.success +"</h3>";
 				$("div#response-body").append(str);
 			}
 			$("#response-modal").modal();
@@ -121,8 +130,7 @@ function updateUser(name, act) {
 
 function confirmNewUser(){
 	action = "addUser";
-	var str = "<h3>Are you sure you want to add user "
-		+ user.userName + " ?</h3>"
+	var str = "<h3>"+ string.confirmAddUser +"</h3>"
 	$("div#confirm-body").append(str);
 	$("#confirm-modal").modal();
 }
@@ -135,7 +143,7 @@ $("button#submitUser").click(function() {
 	if (validateNewUser()) {
 		confirmNewUser();
 	} else {
-		var str = "<h3>Input error!!!</h3>";
+		var str = "<h3>"+ string.inputError +"</h3>";
 		$("div#response-body").append(str);
 		$("#response-modal").modal();
 		autoCloseModal();
@@ -145,8 +153,7 @@ $("button#submitUser").click(function() {
 $("button#unlock-user").click(function() {
 	action = "active"
 	user.userName = $(this).val();
-	var str = "<h3>Are you sure you want to active user "
-		+ user.userName + " ?</h3>"
+	var str = "<h3>"+string.confirmUnlockUser+"</h3>"
 	$("div#confirm-body").append(str);
 	$("#confirm-modal").modal();
 });
@@ -154,8 +161,7 @@ $("button#unlock-user").click(function() {
 $("button#lock-user").click(function() {
 	action = "deactive"
 	user.userName = $(this).val();
-	var str = "<h3>Are you sure you want to deactive user "
-		+ user.userName + " ?</h3>"
+	var str = "<h3>"+ string.confirmLockUser +"</h3>"
 	$("div#confirm-body").append(str);
 	$("#confirm-modal").modal();
 });

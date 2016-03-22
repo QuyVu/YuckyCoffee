@@ -1,7 +1,7 @@
 <#ftl encoding='UTF-8'>
 <div class="panel panel-primary">
 	<div class="panel-heading">
-		Users Table
+		<@spring.message "user.title"/>
 	</div>
 	<!-- /.panel-heading -->
 	
@@ -10,10 +10,10 @@
 			<table class="table table-striped table-bordered table-hover" id="userTable">
 				<thead>
 					<tr>
-						<th class="col-md-3">Username</th>
-						<th class="col-md-3">Role</th>
-						<th class="col-md-3">Status</th>
-						<th class="col-md-3 text-center" style="">Action</th>
+						<th class="col-md-3"><@spring.message "user.name"/></th>
+						<th class="col-md-3"><@spring.message "user.role"/></th>
+						<th class="col-md-3"><@spring.message "status"/></th>
+						<th class="col-md-3 text-center" style=""><@spring.message "action"/></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -21,10 +21,10 @@
 					<tr style="background-color:#${acc.enabled?string('DCEDC8','FFECB3')}">
 						<td>${acc.userName}</td>
 						<td>${acc.role}</td> 
-						<td>${acc.enabled?string('Available','Unavailable')}</td> 
+						<td><#if acc.enabled> <@spring.message "available"/><#else> <@spring.message "unavailable"/></#if></td> 
 						<td class="text-center">
 							<button id="${acc.enabled?string('lock-user','unlock-user')}" style="width:80px" class="btn btn-default btn-sm" value="${acc.userName}">
-								<i class="fa fa-lock"></i> ${acc.enabled?string('Lock','Unlock')}
+								<i class="fa fa-lock"></i><#if acc.enabled> <@spring.message "user.lock"/><#else> <@spring.message "user.unlock"/></#if>
 							</button>
 						</td>
 					</tr>

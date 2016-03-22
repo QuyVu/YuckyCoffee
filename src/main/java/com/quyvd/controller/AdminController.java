@@ -7,6 +7,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 //import org.apache.log4j.Logger;
@@ -14,12 +17,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.LocaleResolver;
 
 import com.quyvd.config.Principal;
 import com.quyvd.dao.CoffeeDAO;
@@ -56,54 +62,68 @@ public class AdminController {
 	@Autowired
 	private CupDAO cupDAO;
 
+	@Autowired
+	LocaleResolver localeResolver;
+	
 	private Principal principal = new Principal();
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String adminPage() {
+	public String adminPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang) {
 		logger.entry();
+		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		return logger.exit("redirect:admin/order");
 	}
 
 	@RequestMapping(value = "/order", method = RequestMethod.GET)
-	public String orderPage(Model user) {
+	public String orderPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
+			Model user) {
 		logger.entry();
 		logger.trace("trace");
+		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		user.addAttribute("user", principal.getPrincipal());
-		return logger.exit("listOrderPage");
+		return logger.exit("pages/list-order");
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String userPage(@ModelAttribute("model") ModelMap model, Model user) {
+	public String userPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
+			@ModelAttribute("model") ModelMap model, Model user) {
 		logger.entry();
 		List<User> users = userDAO.listUser();
 		model.addAttribute("users", users);
+		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		user.addAttribute("user", principal.getPrincipal());
-		return logger.exit("userManagePage");
+		return logger.exit("pages/manage-user");
 	}
 
 	@RequestMapping(value = "/coffee", method = RequestMethod.GET)
-	public String coffeePage(@ModelAttribute("model") ModelMap model, Model user) {
+	public String coffeePage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
+			@ModelAttribute("model") ModelMap model, Model user) {
 		logger.entry();
 		List<Coffee> coffees = coffeeDAO.listAllCoffee();
 		model.addAttribute("coffees", coffees);
+		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		user.addAttribute("user", principal.getPrincipal());
-		return logger.exit("coffeeManagePage");
+		return logger.exit("pages/manage-coffee");
 	}
 
 	@RequestMapping(value = "/condiment", method = RequestMethod.GET)
-	public String condimentPage(@ModelAttribute("model") ModelMap model, Model user) {
+	public String condimentPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
+			@ModelAttribute("model") ModelMap model, Model user) {
 		logger.entry();
 		List<Condiment> condiments = condimentDAO.listAllCondiment();
 		model.addAttribute("condiments", condiments);
+		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		user.addAttribute("user", principal.getPrincipal());
-		return logger.exit("condimentManagePage");
+		return logger.exit("pages/manage-condiment");
 	}
 
 	@RequestMapping(value = "/statistic", method = RequestMethod.GET)
-	public String statisticPage(Model user) {
+	public String statisticPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
+			Model user) {
 		logger.entry();
+		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		user.addAttribute("user", principal.getPrincipal());
-		return logger.exit("statisticPage");
+		return logger.exit("pages/statistic");
 	}
 
 	@RequestMapping(value = "/order", method = RequestMethod.POST)

@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
-<title><@tiles.insertAttribute name="title" /></title>
+<title><@spring.message "login.login"/></title>
 <link rel='stylesheet' href='/YuckyCoffee/resources/css/shared/custom.css'>
 <link rel='stylesheet' href='/YuckyCoffee/resources/css/shared/tab.css'>
 <link rel='stylesheet' href='/YuckyCoffee/resources/bower_components/font-awesome/css/font-awesome.min.css'>
@@ -17,21 +17,21 @@
 		<div class="col-md-4 col-md-offset-4">
     		<div class="panel panel-default">
 			  	<div class="panel-heading">
-			    	<h3 class="panel-title">Login</h3>
+			    	<h3 class="panel-title"><@spring.message "login.login"/></h3>
 			 	</div>
 			 	<#if (error??)>
-			 		<div class="login-fail">${error}</div>
+			 		<div class="login-fail"><@spring.message "login.warning"/></div>
 			 	</#if>
 			  	<div class="panel-body">
 			    	<form name='f' action="j_spring_security_check" method='POST'>
                     <fieldset>
 			    	  	<div class="form-group">
-			    		    <input class="form-control" placeholder="Username" name="username" type="text">
+			    		    <input class="form-control" placeholder='<@spring.message "login.username"/>' name="username" type="text">
 			    		</div>
 			    		<div class="form-group">
-			    			<input class="form-control" placeholder="Password" name="password" type="password">
+			    			<input class="form-control" placeholder='<@spring.message "login.password"/>' name="password" type="password">
 			    		</div>
-			    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+			    		<input class="btn btn-lg btn-success btn-block" type="submit" value='<@spring.message "login.login"/>'>
 			    	</fieldset>
 			      	</form>
 			    </div>

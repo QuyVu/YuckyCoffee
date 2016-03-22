@@ -1,79 +1,68 @@
 var string = {
-	normalSize : "",
-	largeSize : "",
-	confirmModalHeader : "",
 	confirmBody : "",
-	yesButton : "",
-	noButton : "",
-	responseHeader : "",
-	responseBody : "",
-	closeButton : "",
-	updatePassHeader : "",
-	curPass : "",
-	newPass : "",
-	repeatPass : "",
-	emptyField : "",
-	wrongCur : "",
-	wrongRepeat : "",
+	invalidPrice : "",
+	emptyOrder : "",
+	inputError : "",
+	existName : "",
+	connectDB: "",
+	confirmAddUser: "",
+	confirmUnlockUser: "",
+	confirmLockUser: "",
+	confirmAddCoffee: "",
+	confirmUpdateCoffee: "",
+	confirmAddCondiment: "",
+	confirmUpdateCondiment: "",
 	success : ""
 }
+
 function setLanguage(lang) {
 	switch (lang) {
 	case "jp":
-		string.normalSize = "通常";
-		string.largeSize = "大きい";
-		string.confirmModalHeader = "確認";
 		string.confirmBody = "あなたはこの注文を提出しますか？";
-		string.yesButton = "はい";
-		string.noButton = "いいえ";
-		string.responseHeader = "お知らせ";
-		string.responseBody = "";
-		string.closeButton = "閉じる";
-		string.updatePassHeader = "パスワード更新";
-		string.curPass = "当座パスワード";
-		string.newPass = "新規パスワード";
-		string.repeatPass = "確認パスワード";
-		string.emptyField = "空いフィールドがある";
-		string.wrongCur = "当座パスワードが間違った";
-		string.wrongRepeat = "確認パスワードが間違った";
+		string.invalidPrice = "合計が間違い";
+		string.emptyOrder = "何も注文しなかった。";
+		string.inputError = "入力が必要です";
+		string.existName = "この名は使用中";
+		string.connectDB = "データベースに接続できません";
+		string.confirmAddUser = "このユーザーを追加しますか？";
+		string.confirmUnlockUser = "このユーザーをアンロックしますか？";
+		string.confirmLockUser = "このユーザーをロックしますか？";
+		string.confirmAddCoffee = "このコーヒーを追加しますか？";
+		string.confirmUpdateCoffee = "このコーヒーを更新しますか？";
+		string.confirmAddCondiment = "この調味料aを追加しますか？";
+		string.confirmUpdateCondiment = "この調味料を更新しますか？";
 		string.success = "成功した！！！";
 		break;
 	case "vi":
-		string.normalSize = "Vừa";
-		string.largeSize = "Lớn";
-		string.confirmModalHeader = "Xác nhận";
 		string.confirmBody = "Bạn có muốn duyệt đơn hàng này?";
-		string.yesButton = "Có";
-		string.noButton = "Không";
-		string.responseHeader = "Phản hồi";
-		string.responseBody = "";
-		string.closeButton = "Đóng";
-		string.updatePassHeader = "Đổi mật khẩu";
-		string.curPass = "Mật khẩu hiện tại";
-		string.newPass = "Mật khẩu mới";
-		string.repeatPass = "Xác nhận mật khẩu mới";
-		string.emptyField = "Có thông tin chưa được nhập!";
-		string.wrongCur = "Mật khẩu hiện tại không đúng";
-		string.wrongRepeat = "Mật khẩu xác nhận không đúng";
-		string.success = "Thành công!";
+		string.invalidPrice = "Tổng giá không hợp lệ";
+		string.emptyOrder = "Đơn hàng không hợp lệ";
+		string.inputError = "Thông tin không hợp lệ";
+		string.existName = "Tên này đã tồn tại";
+		string.connectDB = "Không thể kết nối đến cơ sở dữ liệu";
+		string.confirmAddUser = "Bạn có muốn thêm người dùng này?";
+		string.confirmUnlockUser = "Bạn có muốn kích hoạt tài khoản này?";
+		string.confirmLockUser = "Bạn có muốn khóa tài khoản này?";
+		string.confirmAddCoffee = "Bạn có muốn thêm cà-phê này?",
+		string.confirmUpdateCoffee = "Bạn có muốn cập nhật loại cà-phê này?";
+		string.confirmAddCondiment = "Bạn có muốn thêm condiment này?",
+		string.confirmUpdateCondiment = "Bạn có muốn cập nhật loại condiment này?";
+		string.success = "Thành công!!!";
 		break;
 	default:
-		string.normalSize = "Normal";
-		string.largeSize = "Large";
-		string.confirmModalHeader = "Confirm";
 		string.confirmBody = "Are You Sure You Want to Accept this Order";
-		string.yesButton = "Yes";
-		string.noButton = "No";
-		string.responseHeader = "Response";
-		string.responseBody = "";
-		string.closeButton = "Close";
-		string.updatePassHeader = "Change Password";
-		string.curPass = "Current Password";
-		string.newPass = "New Password";
-		string.repeatPass = "Repeat Password";
-		string.emptyField = "Some fields are empty";
-		string.wrongCur = "Current Password is incorrect";
-		string.wrongRepeat = "Repeat Password is not match";
+		string.invalidPrice = "Invalid order price";
+		string.emptyOrder = "This order is empty";
+		string.inputError = "Input Error";
+		string.existName = "This already in use";
+		string.connectDB = "Cannot connect to Database";
+		string.confirmAddUser = "Are you sure you want to add this user?";
+		string.confirmUnlockUser = "Are you sure you want to unlock this user?";
+		string.confirmLockUser = "Are you sure you want to lock this user?";
+		string.confirmAddCoffee = "Are you sure you want to add this coffee?",
+		string.confirmUpdateCoffee = "Are you sure you want to update this coffee?";
+		string.confirmAddCondiment = "Are you sure you want to add this condiment?",
+		string.confirmUpdateCondiment = "Are you sure you want to update this condiment?";
 		string.success = "Success!!!";
 		break;
 	}

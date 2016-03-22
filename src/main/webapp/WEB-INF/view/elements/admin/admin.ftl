@@ -20,30 +20,30 @@
             <!-- /.navbar-header -->
             <ul class="nav navbar-nav pull-right">
             	<li class=" dropdown">
-                	<a id="username" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" value="${user}">Signed in as ${user}<span class="caret"></span></a>
+                	<a id="username" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" value="${user}">${user}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                    	<li><a id="updatePassword">Change Password</a></li>
+                    	<li><a id="updatePassword"><@spring.message "changePass"/></a></li>
                     </ul>
                 </li>
-                <li class=""><a href="/YuckyCoffee/logout">Logout</a></li>
+                <li><a href="/YuckyCoffee/logout"><@spring.message "logout"/></a></li>
             </ul>
 
             <div class="navbar-default sidebar" role="navigation">
                 	<ul class="nav">
                         <li>
-                            <a href="/YuckyCoffee/admin/order"><i class="fa fa-list-alt fa-fw"></i> Orders</a>
+                            <a href="/YuckyCoffee/admin/order"><i class="fa fa-list-alt fa-fw"></i> <@spring.message "orders"/></a>
                         </li>
                         <li>
-                            <a href="/YuckyCoffee/admin/statistic"><i class="fa fa-bar-chart fa-fw"></i> Statistic</a>
+                            <a href="/YuckyCoffee/admin/statistic"><i class="fa fa-bar-chart fa-fw"></i> <@spring.message "statistic"/></a>
                         </li>
                         <li>
-                            <a href="/YuckyCoffee/admin/user"><i class="fa fa-user fa-fw"></i> Users</a>
+                            <a href="/YuckyCoffee/admin/user"><i class="fa fa-user fa-fw"></i> <@spring.message "users"/></a>
                         </li>
                         <li>
-                            <a href="/YuckyCoffee/admin/coffee"><i class="fa fa-coffee fa-fw"></i> Coffee</a>
+                            <a href="/YuckyCoffee/admin/coffee"><i class="fa fa-coffee fa-fw"></i> <@spring.message "coffee"/></a>
                         </li>
                         <li>
-                            <a href="/YuckyCoffee/admin/condiment"><i class="fa fa-cutlery fa-fw"></i> Condiment</a>
+                            <a href="/YuckyCoffee/admin/condiment"><i class="fa fa-cutlery fa-fw"></i> <@spring.message "condiment"/></a>
                         </li>
                     </ul>
                 <!-- /.sidebar-collapse -->
@@ -71,13 +71,24 @@
         	<!-- Navigation -->
 			<@navbar/>
 		
-            <#include "/WEB-INF/view/shared/update-password.ftl">
+            <#include "/shared/update-password.ftl">
 			<!-- page-wrapper -->
         	<div id="page-wrapper">
         		<@content/>
        		</div>
-        
     	</div>
+    	
+            <div class="col-md-2" style="padding:15px; margin-left:0px; position:absolute">
+  				<a href="?language=jp">
+  					<img class="jp-lang" src="/YuckyCoffee/resources/image/jp.png" alt="Submit" height="20%" width="20%"></img>
+  				</a>
+  				<a href="?language=en">
+	  				<img class="us-lang" src="/YuckyCoffee/resources/image/us.png" href="?language=en" alt="Submit" height="20%" width="20%"></img>
+				</a>
+  				<a href="?language=vi">
+	  				<img class="vi-lang" src="/YuckyCoffee/resources/image/vi.png" href="?language=vi" alt="Submit" height="20%" width="20%"></img>
+				</a>
+  			</div>
 		<@script/>
     	<script src="/YuckyCoffee/resources/js/shared/update-password.js"></script>
 	</body>

@@ -7,6 +7,15 @@ var coffee = {
 
 var action;
 
+$(document).ready(function() {
+    $('#coffeeTable').DataTable({
+            responsive: true,
+            language: {
+            	url: url
+            }
+    });
+});
+
 function setCoffee(id, name, price) {
 	coffee.coffeeID = id;
 	coffee.coffeeName = name;
@@ -41,13 +50,13 @@ function applyNewCoffee() {
 		data : JSON.stringify(coffee),
 		success : function(result) {
 			if (result == -1) {
-				var str = "<h3 id=\"response-content\">Cannot connect to database</h3>";
+				var str = "<h3 id=\"response-content\">" + string.connectDB +"</h3>";
 				$("div#response-body").append(str);
 			} else if (result == 0) {
-				var str = "<h3>coffee name already in use</h3>";
+				var str = "<h3>"+ string.existName +"</h3>";
 				$("div#response-body").append(str);
 			} else {
-				var str = "<h3>Success!!!</h3>";
+				var str = "<h3>"+ string.success +"</h3>";
 				$("div#response-body").append(str);
 			}
 			$("#response-modal").modal();
@@ -70,13 +79,13 @@ function updateCoffee() {
 		data : JSON.stringify(coffee),
 		success : function(result) {
 			if (result == 0) {
-				var str = "<h3>Update fail! This name already exists!</h3>";
+				var str = "<h3>"+ string.existName +"</h3>";
 				$("div#response-body").append(str);
 			} else if (result == -1) {
-				var str = "<h3>Cannot connect to database</h3>";
+				var str = "<h3>" + string.connectDB +"</h3>";
 				$("div#response-body").append(str);
 			} else {
-				var str = "<h3>Success!!!</h3>";
+				var str = "<h3>"+ string.success +"</h3>";
 				$("div#response-body").append(str);
 			}
 			$("#response-modal").modal();
@@ -91,12 +100,10 @@ function updateCoffee() {
 function confirmCoffee(act) {
 	if (act == "addCoffee") {
 		action = "addCoffee";
-		var str = "<h3 id=\"response-content\">Are you sure you want to add coffee: "
-				+ coffee.coffeeName + "</h3>";
+		var str = "<h3 id=\"response-content\">" + string.confirmAddCoffee + "</h3>";
 	} else if (action = "updateCoffee") {
 		action = "updateCoffee";
-		var str = "<h3 id=\"response-content\">Are you sure you want to update coffee: "
-				+ coffee.coffeeName + "</h3>";
+		var str = "<h3 id=\"response-content\">" + string.confirmUpdateCoffee + "</h3>";
 	}
 	$("div#confirm-body").append(str);
 	$("#confirm-modal").modal();
@@ -150,7 +157,7 @@ $("button#submit-coffee").click(function() {
 	if (validateNewCoffee()) {
 		confirmCoffee("addCoffee");
 	} else {
-		var str = "<h3>Input error!!!</h3>";
+		var str = "<h3>"+ string.inputError +"</h3>";
 		$("div#response-body").append(str);
 		$("#response-modal").modal();
 		autoCloseModal();

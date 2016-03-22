@@ -3,10 +3,10 @@
 		<table class="table ordering">
 			<thead>
 				<tr>
-					<th class="coffee-name col-md-2"><span>Coffee</span></th>
-					<th class="col-md-2"><span>Size</span></th>
-					<th class="col-md-4"><span>Condiments</span></th>
-					<th class="col-md-2"><span>Price</span></th>
+					<th class="coffee-name col-md-2"><span><@spring.message "coffee"/></span></th>
+					<th class="col-md-2"><span><@spring.message "size"/></span></th>
+					<th class="col-md-4"><span><@spring.message "condiments"/></span></th>
+					<th class="col-md-2"><span><@spring.message "price"/></span></th>
 					<th class="col-md-2"></th>
 					
 				</tr>

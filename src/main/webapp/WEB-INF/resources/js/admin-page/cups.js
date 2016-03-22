@@ -2,6 +2,9 @@ var cupTable;
 $(document).ready(function() {
 	cupTable=$('#cup-table').DataTable({
 		responsive : true,
+        language: {
+        	url: url
+        },
 		searching : false
 	});
 });

@@ -1,63 +1,64 @@
 $(document).ready(function() {
 	$(".jp-lang").mouseover(function() {
-		$(this).attr("src", "resources/image/jp_hover.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/jp_hover.png");
 	});
 	$(".jp-lang").mouseout(function() {
-		$(this).attr("src", "resources/image/jp.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/jp.png");
 	});
 	$(".jp-lang").mousedown(function() {
-		$(this).attr("src", "resources/image/jp_click.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/jp_click.png");
 	});
 	$(".jp-lang").mouseup(function() {
-		$(this).attr("src", "resources/image/jp_hover.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/jp_hover.png");
 	});
 	$(".us-lang").mouseover(function() {
-		$(this).attr("src", "resources/image/us_hover.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/us_hover.png");
 	});
 	$(".us-lang").mouseout(function() {
-		$(this).attr("src", "resources/image/us.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/us.png");
 	});
 	$(".us-lang").mousedown(function() {
-		$(this).attr("src", "resources/image/us_click.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/us_click.png");
 	});
 	$(".us-lang").mouseup(function() {
-		$(this).attr("src", "resources/image/us_hover.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/us_hover.png");
 	});
 	$(".vi-lang").mouseover(function() {
-		$(this).attr("src", "resources/image/vi_hover.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/vi_hover.png");
 	});
 	$(".vi-lang").mouseout(function() {
-		$(this).attr("src", "resources/image/vi.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/vi.png");
 	});
 	$(".vi-lang").mousedown(function() {
-		$(this).attr("src", "resources/image/vi_click.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/vi_click.png");
 	});
 	$(".vi-lang").mouseup(function() {
-		$(this).attr("src", "resources/image/vi_hover.png");
+		$(this).attr("src", "/YuckyCoffee/resources/image/vi_hover.png");
 	});
 });
 $("img.vi-lang").click(function(event) {
 	// Prevent the form from submitting via the browser.
 	event.preventDefault();
 	setCookie("lang","vi");
-	location.href ="?language=vi";
+	window.location.reload();
 });
 $("img.us-lang").click(function(event) {
 	// Prevent the form from submitting via the browser.
 	event.preventDefault();
 	setCookie("lang","en");
-	location.href ="?language=en";
+	window.location.reload();
 });
 $("img.jp-lang").click(function(event) {
 	// Prevent the form from submitting via the browser.
 	event.preventDefault();
 	setCookie("lang","jp");
-	location.href ="?language=jp";
+	window.location.reload();
 });
 
 function setCookie(cname,cvalue) {
     var d = new Date();
-    document.cookie = cname+"="+cvalue;
+    referer = "path=/YuckyCoffee";
+    document.cookie = cname+"="+cvalue + "; " + referer;
 }
 function getCookie(cname) {
     var name = cname + "=";
@@ -70,4 +71,16 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+var lang = getCookie("lang");
+setLanguage(lang);
+var url = "";
+
+if(lang=='jp') {
+    url = "/YuckyCoffee/resources/json/Japanese.json";
+} else if (lang=='vi'){
+	url = "/YuckyCoffee/resources/json/Vietnamese.json";
+} else {
+	url = "/YuckyCoffee/resources/json/English.json";
 }

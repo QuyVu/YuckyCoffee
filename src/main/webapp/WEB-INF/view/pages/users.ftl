@@ -1,5 +1,5 @@
 <#ftl encoding='UTF-8'>
-<#include "/WEB-INF/view/pages/admin.ftl">
+<#include "/elements/admin/admin.ftl">
 
 <#macro css>
     <!-- Bootstrap Core CSS -->
@@ -7,9 +7,6 @@
 
     <!-- MetisMenu CSS -->
     <link href="/YuckyCoffee/resources/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
-    <!-- Chartist CSS -->
-    <link href="/YuckyCoffee/resources/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="/YuckyCoffee/resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -31,39 +28,40 @@
     <script src="/YuckyCoffee/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- Chartist JavaScript -->
-    <script src="/YuckyCoffee/resources/bower_components/Chart.js/Chart.js"></script>
+    <script src="/YuckyCoffee/resources/bower_components/Chart.js/Chart.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/YuckyCoffee/resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
     
 	<!-- DataTables JavaScript -->
-    <script src="/YuckyCoffee/resources/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="/YuckyCoffee/resources/bower_components/datatables/media/js/dataTables.bootstrap.min.js"></script>    
+    <script src="/YuckyCoffee/resources/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>    
     
     <script src="/YuckyCoffee/resources/bower_components/moment/min/moment.min.js"></script>
     <script src="/YuckyCoffee/resources/bower_components/moment/min/locales.min.js"></script>
     <script src="/YuckyCoffee/resources/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     
     <!-- Custom JavaScript -->
+	<script src="/YuckyCoffee/resources/js/shared/string.js"></script>
+    <script src="/YuckyCoffee/resources/js/shared/change-lang.js"></script>
     <script src="/YuckyCoffee/resources/js/admin-page/sb-admin-2.js"></script>
-    <script src="/YuckyCoffee/resources/js/admin-page/datepicker.js"></script>
-    <script src="/YuckyCoffee/resources/js/admin-page/cups.js"></script>
+    <script src="/YuckyCoffee/resources/js/admin-page/default-page-chart.js"></script>
+    
 </#macro>
 
 <#macro content>
 	<div class="row">
-		<div class="col-lg-12">
-			<h1 class="page-header">Orders</h1>
-		</div>
+			<h1 class="page-header">
+				This Month
+				<button class="btn btn-primary btn-lg">Detail</button>
+			</h1>
+        <!-- /.col-lg-12 -->
 	</div>
-	<!-- /.row -->
-	<div class="row"> 
-		<div class="row"> 
-			<#include "/WEB-INF/view/elements/admin/orders/order-datatable.ftl">
-			<#include "/WEB-INF/view/elements/admin/orders/cup-datatable.ftl">
-		</div>
+	<div class="panel panel-default" style="background-color:#F7F7F9; border-color:transparent">
+  		<div class="panel-body">
+    		<canvas id="myChart" width="1000" height="400"></canvas>
+  		</div>
 	</div>
-	<!-- /.row -->
+	
 </#macro>
 
 <@display/>

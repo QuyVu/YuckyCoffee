@@ -1,5 +1,4 @@
-var lang = getCookie("lang");
-
+var url = "";
 var order = {
 	purchaseTime : 0,
 	total : 0
@@ -85,50 +84,53 @@ function selectCoffee(e) {
 }
 
 // chose normal size for the cup
-$("button#btn-normal").click(function() {
-	if ($("span#cup-size").text() == "Large" || $("span#cup-size").text() == "大きい") {
-		cup.price = parseFloat(cup.price) - 1;
-		cup.size = "Normal";
-		if(lang=="jp")
-			$("span#cup-size").text("通常");
-		else if(lang=="vi")
-			$("span#cup-size").text("Vừa");
-		else
-			$("span#cup-size").text("Normal");
-		$("td#cup-price").text(parseFloat(cup.price) + " $");
-	} else {
-		cup.size = "Normal";
-		if(lang=="jp")
-			$("span#cup-size").text("通常");
-		else if(lang=="vi")
-			$("span#cup-size").text("Vừa");
-		else
-			$("span#cup-size").text("Normal");
-	}
-});
+$("button#btn-normal").click(
+		function() {
+			if ($("span#cup-size").text() == "Large"
+					|| $("span#cup-size").text() == "大きい"
+					|| $("span#cup-size").text() == "Lớn") {
+				cup.price = parseFloat(cup.price) - 1;
+				cup.size = "Normal";
+				$("span#cup-size").text(translate(cup.size));
+				$("td#cup-price").text(parseFloat(cup.price) + " $");
+			} else {
+				cup.size = "Normal";
+				$("span#cup-size").text(translate(cup.size));
+			}
+		});
 
 // chose large size for the cup
-$("button#btn-large").click(function() {
-	if ($("span#cup-size").text() != "Large" || $("span#cup-size").text() != "大きい") {
-		cup.price = parseFloat(cup.price) + 1;
-		cup.size = "Large";
-		if(lang=="jp")
-			$("span#cup-size").text("大きい");
-		else if(lang=="vi")
-			$("span#cup-size").text("Lớn");
+$("button#btn-large").click(
+		function() {
+			if ($("span#cup-size").text() != "Large"
+					|| $("span#cup-size").text() != "大きい"
+					|| $("span#cup-size").text() != "Lớn") {
+				cup.price = parseFloat(cup.price) + 1;
+				cup.size = "Large";
+				$("span#cup-size").text(translate(cup.size));
+				$("td#cup-price").text(parseFloat(cup.price) + " $");
+			} else {
+				cup.size = "Large";
+				$("span#cup-size").text(translate(cup.size));
+			}
+		});
+function translate(string) {
+	if (string == "Normal") {
+		if (lang == "jp")
+			return "通常";
+		else if (lang == "vi")
+			return "Vừa";
 		else
-			$("span#cup-size").text("Large");
-		$("td#cup-price").text(parseFloat(cup.price) + " $");
+			return "Normal";
 	} else {
-		cup.size = "Large";
-		if(lang=="jp")
-			$("span#cup-size").text("大きい");
-		else if(lang=="vi")
-			$("span#cup-size").text("Lớn");
+		if (lang == "jp")
+			return "大きい";
+		else if (lang == "vi")
+			return "Lớn";
 		else
-			$("span#cup-size").text("Large");
+			return "Large";
 	}
-});
+}
 
 // Add condiment to cup
 $("button.btn-add-condiment").click(
@@ -183,32 +185,44 @@ function applyCup() {
 // display ordered cup
 function appendCheckTable() {
 	var str = "<tr id=\"cup-row\">" + "<td>" + coffee.name + "</td>" + "<td>"
-			+ cup.size + "</td>" + "<td>" + condiments + "</td> " + "<td>"
-			+ cup.price + "</td>" + "</tr>";
+			+ translate(cup.size) + "</td>" + "<td>" + condiments + "</td> "
+			+ "<td>" + cup.price + "</td>" + "</tr>";
 	$("tbody#tableCheckOrder").append(str);
-	var letterCup = {coffeeName:coffee.name,size:cup.size,condiment:condiments,price:cup.price};
+	var letterCup = {
+		coffeeName : coffee.name,
+		size : cup.size,
+		condiment : condiments,
+		price : cup.price
+	};
 	cArray.push(letterCup);
 }
 
 function responseSuccess() {
-	str = '<h3>Succsess!!!</h3>'+'<table class="table table-striped table-bordered"'
+	str = '<h3>' + string.success + '</h3>'
+			+ '<table class="table table-striped table-bordered"'
 			+ 'id="response-cups-table">' + '<thead>' + '<tr>'
-			+ '<th class="col-md-2">Coffee</th>' + '<th class="col-md-2">Size</th>'
-			+ '<th class="col-md-6">Condiments</th>' + '<th class="col-md-2">Price ($)</th>'
-			+ '</tr>' + '</thead>' + '<tbody id="cups-tbody">' + '</tbody>'
-			+ '</table>';
+			+ '<th class="col-md-2">Coffee</th>'
+			+ '<th class="col-md-2">Size</th>'
+			+ '<th class="col-md-6">Condiments</th>'
+			+ '<th class="col-md-2">Price ($)</th>' + '</tr>' + '</thead>'
+			+ '<tbody id="cups-tbody">' + '</tbody>' + '</table>';
 	$("#response-modal #response-body").html(str);
-		var table = $('#response-cups-table').DataTable({
-			responsive : true,
-			paging : false,
-			info: false,
-			searching : false
-		});
+	
+	var table = $('#response-cups-table').DataTable({
+		responsive : true,
+		paging : false,
+		info : false,
+		language: {
+        	"url": url
+        },
+		searching : false
+	});
+	
+	console.log(JSON.stringify(table));
 	for (i = 0; i < cArray.length; i++)
-		table.row.add([cArray[i].coffeeName,
-						cArray[i].size,
-						cArray[i].condiment,
-						cArray[i].price]).draw();
+		table.row.add(
+				[ cArray[i].coffeeName, cArray[i].size, cArray[i].condiment,
+						cArray[i].price ]).draw();
 }
 
 function applyOrder() {
@@ -226,17 +240,15 @@ function applyOrder() {
 		success : function(result) {
 			if (result == 1) {
 				responseSuccess();
-				$("#response-modal").modal();	
-			} 
-			else if (result == 0) {
-				str = '<h3>Invalid order price</h3>'
+				$("#response-modal").modal();
+			} else if (result == 0) {
+				str = '<h3>' + string.invalidPrice + '</h3>'
 				$("div#response-body").append(str);
-				$("#response-modal").modal();	
-			}
-			else {
-				str = '<h3>This order is empty</h3>'
+				$("#response-modal").modal();
+			} else {
+				str = '<h3>' + string.emptyOrder + '</h3>'
 				$("div#response-body").append(str);
-				$("#response-modal").modal();	
+				$("#response-modal").modal();
 			}
 		},
 		error : function(result) {
@@ -254,11 +266,11 @@ function submitOrder() {
 	resetOrder();
 }
 
-//Submit Cup Info to Server using AJAX
+// Submit Cup Info to Server using AJAX
 $("button#applyOrder").click(function(event) {
 	// Prevent the form from submitting via the browser.
 	event.preventDefault();
-	str = '<h3>Are You sure to submit this order</h3>';
+	str = '<h3>' + string.confirmBody + '</h3>';
 	$("div#confirm-body").append(str);
 	$("#confirm-modal").modal();
 });
@@ -271,7 +283,7 @@ $('button#deny-action').click(function() {
 	$("div#confirm-body").children().remove();
 });
 
-//Submit Cup Info to Server using AJAX
+// Submit Cup Info to Server using AJAX
 $("button#apply-cup").click(function() {
 	if (cup.coffeeID != 0 && cup.size != "") {
 		applyCup();
@@ -286,7 +298,7 @@ $("button#apply-cup").click(function() {
 		alert("You must chose coffee and size");
 });
 
-//Delete the cup
+// Delete the cup
 $("button#delete-cup").click(function() {
 	resetCup();
 });

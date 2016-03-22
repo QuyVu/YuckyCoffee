@@ -3,16 +3,21 @@ package com.quyvd.controller;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.LocaleResolver;
 
 import com.quyvd.config.Principal;
 import com.quyvd.dao.CoffeeDAO;
@@ -37,20 +42,20 @@ public class OrderController {
 	@Autowired
 	private OrderDAO orderDAO;
 	@Autowired
-	private CupDAO cupDAO;
+	private CupDAO cupDAO;	
+	@Autowired
+	LocaleResolver localeResolver;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String orderPage(@RequestParam(value="language", required = false) String lang, @ModelAttribute("model") ModelMap model,
-			Model user) {
+	public String orderPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
+			@ModelAttribute("model") ModelMap model, Model user) {
 		List<Coffee> listCoffee = coffeeDAO.listAvailableCoffee();
 		List<Condiment> listCondiment = condimentDAO.listAvailableCondiment();
+		localeResolver.setLocale(request,response,StringUtils.parseLocaleString(lang));
 		model.addAttribute("listCoffee", listCoffee);
 		model.addAttribute("listCondiment", listCondiment);
 		user.addAttribute("user", principal.getPrincipal());
-		if (lang!=null && lang.equals("jp"))
-			return "jpSellerPage";
-		else
-			return "sellerPage";
+		return "pages/seller";
 	}
 
 	@RequestMapping(value = "/submit-order", method = RequestMethod.POST)

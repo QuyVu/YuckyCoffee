@@ -1,5 +1,5 @@
 <#ftl encoding='UTF-8'>
-<#include "/WEB-INF/view/pages/admin.ftl">
+<#include "/elements/admin/admin.ftl">
 
 <#macro css>
 	<!-- Bootstrap Core CSS -->
@@ -33,40 +33,34 @@
     <script src="/YuckyCoffee/resources/bower_components/datatables/media/js/dataTables.bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
+	<script src="/YuckyCoffee/resources/js/shared/string.js"></script>
+    <script src="/YuckyCoffee/resources/js/shared/change-lang.js"></script>
     <script src="/YuckyCoffee/resources/js/admin-page/sb-admin-2.js"></script>
-    <script src="/YuckyCoffee/resources/js/admin-page/manage-user.js"></script>
+    <script src="/YuckyCoffee/resources/js/admin-page/manage-condiment.js"></script>
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#userTable').DataTable({
-                responsive: true
-        });
-    });
-    </script>
 </#macro>
 
 <#macro content>
 			<div class="row">
                 <div class="col-md-12">
-                    <h1 class="page-header">Users</h1>
+                    <h1 class="page-header"><@spring.message "condiment.header"/></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">  
-					<button class="btn btn-success btn-lg" style="margin-bottom:20px" data-toggle="modal" data-target="#myModal">
+					<button class="btn btn-success btn-lg" style="margin-bottom:20px" data-toggle="modal" data-target="#new-condiment-modal">
 						<i class="fa fa-plus"></i>
-						New User
+						<@spring.message "condiment.add"/>
 					</button>
-					<#include "/WEB-INF/view/shared/response-modal.ftl">
+					<#include "/shared/response-modal.ftl">
 					
-					<#include "/WEB-INF/view/shared/confirm-modal.ftl">
+					<#include "/shared/confirm-modal.ftl">
 					
-					<#include "/WEB-INF/view/elements/admin/users/add-user-modal.ftl">
+					<#include "/elements/admin/condiment/add-condiment-modal.ftl">
 					
-                    <#include "/WEB-INF/view/elements/admin/users/user-datatable.ftl">
+                    <#include "/elements/admin/condiment/condiment-datatable.ftl">
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
