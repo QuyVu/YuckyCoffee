@@ -10,7 +10,7 @@ import com.quyvd.model.Condiment;
 public class CondimentMapper implements RowMapper<Condiment> {
 
 	public Condiment mapRow(ResultSet resSet, int rowNum) throws SQLException {
-		int id = resSet.getInt("condiments_id");
+		int id = resSet.getInt("condiment_id");
 		String name = resSet.getString("name");
 		double price = resSet.getDouble("price");
 		boolean enabled = resSet.getBoolean("enabled");

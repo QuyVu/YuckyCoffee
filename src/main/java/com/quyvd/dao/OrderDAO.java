@@ -28,7 +28,7 @@ public class OrderDAO extends JdbcDaoSupport {
 	}
 
 	public int addOrder(String userName, Timestamp pTime, double price) {
-		String sql = "INSERT INTO orders (user_name, purchase_time, total) VALUES (?, ?, ?) RETURNING orders_id";
+		String sql = "INSERT INTO orders (user_name, purchase_time, total) VALUES (?, ?, ?) RETURNING order_id";
 		Object[] params = new Object[] { userName, pTime, price };
 		try {
 			return this.getJdbcTemplate().queryForObject(sql, params, Integer.class);

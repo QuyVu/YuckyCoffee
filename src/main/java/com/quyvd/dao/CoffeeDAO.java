@@ -35,7 +35,7 @@ public class CoffeeDAO extends JdbcDaoSupport {
 	};
 
 	public int editCoffee(Coffee coffee) {
-		String sql = "UPDATE coffees SET name = ?, price = ?, enabled = ? WHERE coffees_id = ?";
+		String sql = "UPDATE coffees SET name = ?, price = ?, enabled = ? WHERE coffee_id = ?";
 		Object[] params = new Object[] { coffee.getCoffeeName(), coffee.getCoffeePrice(), coffee.isEnabled(), coffee.getCoffeeID() };
 		try {
 			return this.getJdbcTemplate().update(sql, params);
@@ -47,28 +47,28 @@ public class CoffeeDAO extends JdbcDaoSupport {
 	};
 
 	public String getNamebyID(int coffeeID) {
-		String sql = "SELECT name FROM coffees WHERE coffees_id=?";
+		String sql = "SELECT name FROM coffees WHERE coffee_id=?";
 		Object[] params = new Object[] { coffeeID };
 		String coffeeName = this.getJdbcTemplate().queryForObject(sql, params, String.class);
 		return coffeeName;
 	}
 
 	public double getPriceByID(int coffeeID) {
-		String sql = "SELECT price FROM coffees WHERE coffees_id=?";
+		String sql = "SELECT price FROM coffees WHERE coffee_id=?";
 		Object[] params = new Object[] { coffeeID };
 		Double price = this.getJdbcTemplate().queryForObject(sql, params, Double.class);
 		return price;
 	}
 
 	public List<Coffee> listAllCoffee() {
-		String sql = "SELECT * FROM coffees order by coffees_id";
+		String sql = "SELECT * FROM coffees order by coffee_id";
 		CoffeeMapper cMap = new CoffeeMapper();
 		List<Coffee> list = this.getJdbcTemplate().query(sql, cMap);
 		return list;
 	}
 
 	public List<Coffee> listAvailableCoffee() {
-		String sql = "SELECT * FROM coffees WHERE enabled=TRUE order by coffees_id";
+		String sql = "SELECT * FROM coffees WHERE enabled=TRUE order by coffee_id";
 		CoffeeMapper cMap = new CoffeeMapper();
 		List<Coffee> list = this.getJdbcTemplate().query(sql, cMap);
 		return list;

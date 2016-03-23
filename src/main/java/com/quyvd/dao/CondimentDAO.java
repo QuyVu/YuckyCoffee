@@ -34,7 +34,7 @@ public class CondimentDAO extends JdbcDaoSupport {
 	};
 
 	public int editCondiment(Condiment condiment) {
-		String sql = "UPDATE condiments SET name = ?, price = ?, enabled = ? WHERE condiments_id = ?";
+		String sql = "UPDATE condiments SET name = ?, price = ?, enabled = ? WHERE condiment_id = ?";
 		Object[] params = new Object[] { condiment.getCondimentName(), condiment.getCondimentPrice(), condiment.isEnabled(), condiment.getCondimentID() };
 		try {
 			return this.getJdbcTemplate().update(sql, params);
@@ -46,14 +46,14 @@ public class CondimentDAO extends JdbcDaoSupport {
 	};
 	
 	public String getNameByID(int condimentID) {
-		String sql = "SELECT name FROM condiments WHERE condiments_id=?";
+		String sql = "SELECT name FROM condiments WHERE condiment_id=?";
 		Object[] params = new Object[] {condimentID};
 		String name = this.getJdbcTemplate().queryForObject(sql, params, String.class);
 		return name;
 	}
 	
 	public double getPriceByID(int condimentID) {
-		String sql = "SELECT price FROM condiments WHERE condiments_id=?";
+		String sql = "SELECT price FROM condiments WHERE condiment_id=?";
 		Object[] params = new Object[] {condimentID};
 		Double price = this.getJdbcTemplate().queryForObject(sql, params, Double.class);
 		return price;

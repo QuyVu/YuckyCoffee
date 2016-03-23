@@ -10,7 +10,7 @@ import com.quyvd.model.Coffee;
 public class CoffeeMapper implements RowMapper<Coffee> {
 
 	public Coffee mapRow(ResultSet resSet, int rowNum) throws SQLException {
-		int id = resSet.getInt("coffees_id");
+		int id = resSet.getInt("coffee_id");
 		String name = resSet.getString("name");
 		double price = resSet.getDouble("price");
 		boolean enabled = resSet.getBoolean("enabled");
