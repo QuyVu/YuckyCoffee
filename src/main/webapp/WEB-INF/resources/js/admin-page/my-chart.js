@@ -57,7 +57,7 @@ var myBarChart = new Chart(ctx).Bar(data, options);
 $(function() {
 	$('#datetimepicker1').datetimepicker({
 		defaultDate: moment(),
-		locale: 'ja',
+		locale: locale,
 		useCurrent : false,
         viewMode: 'years',
         format: 'MM/YYYY'

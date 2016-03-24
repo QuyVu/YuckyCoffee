@@ -74,13 +74,18 @@ function getCookie(cname) {
 }
 
 var lang = getCookie("lang");
-setLanguage(lang);
 var url = "";
+var locale = "en";
+
+setLanguage(lang);
 
 if(lang=='jp') {
+	locale = 'ja';
     url = "/YuckyCoffee/resources/json/Japanese.json";
 } else if (lang=='vi'){
+	locale = 'vi';
 	url = "/YuckyCoffee/resources/json/Vietnamese.json";
 } else {
+	locale = lang;
 	url = "/YuckyCoffee/resources/json/English.json";
 }
