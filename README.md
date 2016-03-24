@@ -6,7 +6,7 @@ Coffee selling Management
 2. Cài đặt postgreSQL 9.0 và pgAdminIII với password mặc định cho user postgres là 1
 
 ### Installation Guide
-1. Copy *.war file in 'docs' directory to your 'xampp/tomcat/webapps'
+1. Copy file CoffeeYucky.war trong thư mục 'docs' vào thư mục 'xampp/tomcat/webapps'
 2. Đăng nhập vào pgAdminIII
 3. Tạo database yucky bằng lênh: CREATE DATABASE yucky
 4. Chạy file yucky_db.sql để tạo bảng và import giá trị cho DB

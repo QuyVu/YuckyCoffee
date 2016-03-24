@@ -1,6 +1,3 @@
-CREATE DATABASE yucky
-    ENCODING = 'UTF8';
-
 DROP TABLE if exists users CASCADE;
 CREATE TABLE users
 (
