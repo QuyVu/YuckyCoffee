@@ -8,7 +8,6 @@ public class User {
 	private boolean enabled;
 
 	public User() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public User(String name, String password, String role, boolean enabled) {

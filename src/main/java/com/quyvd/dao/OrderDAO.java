@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.quyvd.mapper.OrderMapper;
 import com.quyvd.model.Order;
 
 @Service
@@ -28,7 +29,7 @@ public class OrderDAO extends JdbcDaoSupport {
 	}
 
 	public int addOrder(String userName, Timestamp pTime, double price) {
-		String sql = "INSERT INTO orders (user_name, purchase_time, total) VALUES (?, ?, ?) RETURNING order_id";
+		String sql = "INSERT INTO orders (username, purchase_time, total) VALUES (?, ?, ?) RETURNING order_id";
 		Object[] params = new Object[] { userName, pTime, price };
 		try {
 			return this.getJdbcTemplate().queryForObject(sql, params, Integer.class);

@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.quyvd.mapper.CoffeeMapper;
 import com.quyvd.model.Coffee;
 
 @Service
@@ -36,7 +37,7 @@ public class CoffeeDAO extends JdbcDaoSupport {
 
 	public int editCoffee(Coffee coffee) {
 		String sql = "UPDATE coffees SET name = ?, price = ?, enabled = ? WHERE coffee_id = ?";
-		Object[] params = new Object[] { coffee.getCoffeeName(), coffee.getCoffeePrice(), coffee.isEnabled(), coffee.getCoffeeID() };
+		Object[] params = new Object[] { coffee.getProductName(), coffee.getProductPrice(), coffee.isEnabled(), coffee.getProductID() };
 		try {
 			return this.getJdbcTemplate().update(sql, params);
 		} catch (CannotGetJdbcConnectionException ex) {

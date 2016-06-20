@@ -1,22 +1,23 @@
 package com.quyvd.model;
 
+import java.util.List;
+
 public class Cup {
 
 	private int cupID;
-	private int coffeeID;
-	private String size;
 	private int orderID;
-	private String condiments;
+	private String size;
+	private Coffee coffee;
+	private List<Condiment> condiments;
 	private double price;
 
 	public Cup() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public Cup(int id, int orderID, int coffeeID, String size, String condiments, double price) {
+	public Cup(int id, int orderID, String size, Coffee coffee, List<Condiment> condiments, double price) {
 		this.cupID = id;
 		this.orderID = orderID;
-		this.coffeeID = coffeeID;
+		this.coffee = coffee;
 		this.size = size;
 		this.condiments = condiments;
 		this.price = price;
@@ -38,12 +39,12 @@ public class Cup {
 		this.size = size;
 	}
 
-	public int getCoffeeID() {
-		return coffeeID;
+	public Coffee getCoffee() {
+		return coffee;
 	}
 
-	public void setCoffeeID(int coffeeID) {
-		this.coffeeID = coffeeID;
+	public void setCoffee(Coffee coffeeID) {
+		this.coffee = coffeeID;
 	}
 
 	public int getOrderID() {
@@ -54,11 +55,11 @@ public class Cup {
 		this.orderID = orderID;
 	}
 
-	public String getCondiments() {
+	public List<Condiment> getCondiments() {
 		return condiments;
 	}
 
-	public void setCondiments(String condiments) {
+	public void setCondiments(List<Condiment> condiments) {
 		this.condiments = condiments;
 	}
 
@@ -68,5 +69,33 @@ public class Cup {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public String getCondimentIds () {
+		String idList = null;
+		for(Condiment con: this.condiments) {
+			String s = String.valueOf(con.getProductID());
+			if (idList.equals(null)) idList += s;
+			else idList = idList + ", " + s;
+		}
+		return idList;
+	}
+
+	public double getTotalCondiment() {
+		double totalCondiments = 0;
+		for(Condiment con: this.condiments) {
+			totalCondiments += con.getProductPrice();
+		}
+		return totalCondiments;
+	}
+	
+	public String getCondimentNames() {
+		String nameList = null;
+		for(Condiment con: this.condiments) {
+			String s = con.getProductName();
+			if (nameList.equals(null)) nameList += s;
+			else nameList = nameList + ", " + s;
+		}
+		return nameList;
 	}
 }

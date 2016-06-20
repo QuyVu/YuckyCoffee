@@ -1,4 +1,4 @@
-package com.quyvd.dao;
+package com.quyvd.mapper;
 
 import java.sql.Timestamp;
 import java.sql.ResultSet;
@@ -12,7 +12,7 @@ public class OrderMapper implements RowMapper<Order> {
 	
 	public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
 		int orderID = rs.getInt("order_id");
-		String userName = rs.getString("user_name");
+		String userName = rs.getString("username");
 		Timestamp purchaseTime = rs.getTimestamp("purchase_time");
 		double total = rs.getDouble("total");
 		return new Order(orderID, userName, purchaseTime, total);

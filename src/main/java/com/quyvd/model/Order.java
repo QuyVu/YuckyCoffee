@@ -10,7 +10,6 @@ public class Order {
 
 
 	public Order() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Order(int orderID, String userName, Timestamp purchaseTime, double total) {

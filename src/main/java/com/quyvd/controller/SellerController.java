@@ -32,7 +32,7 @@ import com.quyvd.model.OrderWrapper;
 
 @Controller
 @RequestMapping(value = "/seller")
-public class OrderController {
+public class SellerController {
 
 	private Principal principal = new Principal();
 	@Autowired
@@ -77,25 +77,13 @@ public class OrderController {
 			order.setOrderID(orderID);
 			// insert cup into db
 			for (Cup tmp : cupList) {
-				cupDAO.addCup(order.getOrderID(), tmp.getCoffeeID(), tmp.getSize(), tmp.getCondiments(),
+				cupDAO.addCup(order.getOrderID(), tmp.getSize(), tmp.getCoffee().getProductID(), tmp.getCondimentIds(),
 						tmp.getPrice());
 			}
 		} else {
 			i = 0;
 		}
 		return i;
-	}
-
-	public double getTotalCondiment(String condiments) {
-		if (condiments != "") {
-			String[] arrCondiment = condiments.split(", ");
-			double total = 0;
-			for (int i = 0; i < arrCondiment.length; i++) {
-				total += condimentDAO.getPriceByID(Integer.parseInt(arrCondiment[i]));
-			}
-			return total;
-		} else
-			return 0;
 	}
 
 	public boolean isValidOrderPrice(Order order, List<Cup> cupList) {
@@ -113,9 +101,9 @@ public class OrderController {
 	public boolean isValidCupPrice(Cup cup) {
 		double price = 0;
 		if (cup.getSize().equals("Normal")) {
-			price = coffeeDAO.getPriceByID(cup.getCoffeeID()) + getTotalCondiment(cup.getCondiments());
+			price = coffeeDAO.getPriceByID(cup.getCoffee().getProductID()) + cup.getTotalCondiment();
 		} else if (cup.getSize().equals("Large")) {
-			price = coffeeDAO.getPriceByID(cup.getCoffeeID()) + getTotalCondiment(cup.getCondiments()) + 1;
+			price = coffeeDAO.getPriceByID(cup.getCoffee().getProductID()) + cup.getTotalCondiment() + 1;
 		} else
 			return false;
 		if (price == cup.getPrice())

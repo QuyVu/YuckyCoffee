@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.quyvd.mapper.CondimentMapper;
 import com.quyvd.model.Condiment;
 
 @Service
@@ -35,7 +36,7 @@ public class CondimentDAO extends JdbcDaoSupport {
 
 	public int editCondiment(Condiment condiment) {
 		String sql = "UPDATE condiments SET name = ?, price = ?, enabled = ? WHERE condiment_id = ?";
-		Object[] params = new Object[] { condiment.getCondimentName(), condiment.getCondimentPrice(), condiment.isEnabled(), condiment.getCondimentID() };
+		Object[] params = new Object[] { condiment.getProductName(), condiment.getProductPrice(), condiment.isEnabled(), condiment.getProductID() };
 		try {
 			return this.getJdbcTemplate().update(sql, params);
 		} catch (CannotGetJdbcConnectionException ex) {

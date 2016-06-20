@@ -35,10 +35,9 @@ import com.quyvd.dao.OrderDAO;
 import com.quyvd.dao.UserDAO;
 import com.quyvd.model.Coffee;
 import com.quyvd.model.Condiment;
-import com.quyvd.model.Cup;
-import com.quyvd.model.CupWrapper;
 import com.quyvd.model.Order;
 import com.quyvd.model.User;
+import com.quyvd.services.CupService;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -64,6 +63,9 @@ public class AdminController {
 
 	@Autowired
 	LocaleResolver localeResolver;
+	
+	@Autowired
+	private CupService cupService;
 	
 	private Principal principal = new Principal();
 
@@ -139,32 +141,15 @@ public class AdminController {
 	}
 
 	@RequestMapping(value="/list-cup-by-order", method = RequestMethod.POST)
-	public @ResponseBody List<CupWrapper> selectCupByOrder(@RequestParam("id") int orderID) {
+	public @ResponseBody List<Map<String,Object>> selectCupByOrder(@RequestParam("id") int orderID) {
 		logger.entry("orderID: " + orderID);
-		List<Cup> cups = new ArrayList<Cup>();
-		List<CupWrapper> cw = new ArrayList<CupWrapper>();
-		cups = cupDAO.selectCupByOrder(orderID);
-		for(Cup cup: cups) {
-			String condiments = getCondimentName(cup.getCondiments());
-			String coffeeName = coffeeDAO.getNamebyID(cup.getCoffeeID());
-			CupWrapper tmp = new CupWrapper(cup.getCupID(), coffeeName , cup.getSize(), condiments,cup.getPrice()); 
-			cw.add(tmp);
+		List<Map<String,Object>> cups = cupDAO.selectCupByOrder(orderID);
+		for (Map<String,Object> cup : cups) {
+			String ids = String.valueOf(cup.get("condiments"));
+			String names = cupService.convertIdToName(ids);
+			cup.replace("condiments", names);
 		}
-		return logger.exit(cw);
-	}
-
-	public String getCondimentName(String condiments) {
-		String nameArray = "";
-		System.out.println(condiments);
-		if (!condiments.equals("")) {
-			String[] arrCondiment = condiments.split(", ");
-			for (int i = 0; i < arrCondiment.length; i++) {
-				nameArray += condimentDAO.getNameByID(Integer.parseInt(arrCondiment[i]));
-				if (i < arrCondiment.length - 1)
-					nameArray += ", ";
-			}
-		} else nameArray = "N/A";
-		return nameArray;
+		return logger.exit(cups);
 	}
 
 	@RequestMapping(value = "/order-by-month", method = RequestMethod.POST)
@@ -191,7 +176,7 @@ public class AdminController {
 	public @ResponseBody Integer getNewCoffee(@RequestBody Coffee coffee) {
 		logger.entry(coffee.toString());
 		Integer response = new Integer(0);
-		response = coffeeDAO.addCoffee(coffee.getCoffeeName(), coffee.getCoffeePrice(), coffee.isEnabled());
+		response = coffeeDAO.addCoffee(coffee.getProductName(), coffee.getProductPrice(), coffee.isEnabled());
 		return logger.exit(response);
 	}
 
@@ -199,7 +184,7 @@ public class AdminController {
 	public @ResponseBody Integer getNewCondiment(@RequestBody Condiment condiment) {
 		logger.entry(condiment.toString());
 		Integer response = new Integer(0);
-		response = condimentDAO.addCondiment(condiment.getCondimentName(), condiment.getCondimentPrice(),
+		response = condimentDAO.addCondiment(condiment.getProductName(), condiment.getProductPrice(),
 				condiment.isEnabled());
 		return logger.exit(response);
 	}

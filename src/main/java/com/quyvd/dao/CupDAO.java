@@ -1,6 +1,7 @@
 package com.quyvd.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -11,8 +12,6 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.quyvd.model.Cup;
-
 @Service
 @Transactional
 public class CupDAO extends JdbcDaoSupport {
@@ -22,7 +21,7 @@ public class CupDAO extends JdbcDaoSupport {
 		this.setDataSource(dataSource);
 	}
 
-	public int addCup(int orderID, int coffeeID, String size, String condiments, double price) {
+	public int addCup(int orderID, String size, int coffeeID, String condiments, double price) {
 		String sql = "INSERT INTO cups (order_id, coffee_id, size, condiments, price) VALUES (?,?,?,?,?)";
 		Object[] params = new Object[] { orderID, coffeeID, size, condiments, price };
 		try {
@@ -35,11 +34,10 @@ public class CupDAO extends JdbcDaoSupport {
 		
 	};
 
-	public List<Cup> selectCupByOrder(int orderID) {
+	public List<Map<String,Object>> selectCupByOrder(int orderID) {
 		String sql = "SELECT * FROM cups WHERE order_id = ?";
 		Object[] params = new Object[] {orderID};
-		CupMapper cupMapper = new CupMapper();
-		List<Cup> cups = this.getJdbcTemplate().query(sql, params, cupMapper);
+		List<Map<String,Object>> cups = this.getJdbcTemplate().queryForList(sql, params);
 		return cups;
 	}
 }

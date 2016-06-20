@@ -1,4 +1,4 @@
-package com.quyvd.dao;
+package com.quyvd.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
