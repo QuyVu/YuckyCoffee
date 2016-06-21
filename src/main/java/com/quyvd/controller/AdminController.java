@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-//import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,16 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.quyvd.config.Principal;
-import com.quyvd.dao.CoffeeDAO;
-import com.quyvd.dao.CondimentDAO;
-import com.quyvd.dao.CupDAO;
-import com.quyvd.dao.OrderDAO;
-import com.quyvd.dao.UserDAO;
+import com.quyvd.dao.UserDAOImpl;
 import com.quyvd.model.Coffee;
 import com.quyvd.model.Condiment;
-import com.quyvd.model.Order;
 import com.quyvd.model.User;
 import com.quyvd.services.CupService;
+import com.quyvd.services.OrderService;
+import com.quyvd.services.ProductService;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -47,25 +43,19 @@ public class AdminController {
 	// Logger.getLogger(AdminController.class);
 
 	@Autowired
-	private UserDAO userDAO;
+	private UserDAOImpl userDAO;
 
 	@Autowired
-	private CoffeeDAO coffeeDAO;
+	private ProductService productService;
 
 	@Autowired
-	private CondimentDAO condimentDAO;
-
-	@Autowired
-	private OrderDAO orderDAO;
-
-	@Autowired
-	private CupDAO cupDAO;
-
-	@Autowired
-	LocaleResolver localeResolver;
+	private OrderService orderService;
 	
 	@Autowired
 	private CupService cupService;
+
+	@Autowired
+	LocaleResolver localeResolver;
 	
 	private Principal principal = new Principal();
 
@@ -101,7 +91,7 @@ public class AdminController {
 	public String coffeePage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
 			@ModelAttribute("model") ModelMap model, Model user) {
 		logger.entry();
-		List<Coffee> coffees = coffeeDAO.listAllCoffee();
+		List<Coffee> coffees = productService.listAllCoffee();
 		model.addAttribute("coffees", coffees);
 		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		user.addAttribute("user", principal.getPrincipal());
@@ -112,7 +102,7 @@ public class AdminController {
 	public String condimentPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
 			@ModelAttribute("model") ModelMap model, Model user) {
 		logger.entry();
-		List<Condiment> condiments = condimentDAO.listAllCondiment();
+		List<Condiment> condiments = productService.listAllCondiment();
 		model.addAttribute("condiments", condiments);
 		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		user.addAttribute("user", principal.getPrincipal());
@@ -129,13 +119,12 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public @ResponseBody List<Order> selectOrderByDate(@ModelAttribute("foo") ModelMap model,
+	public @ResponseBody List<Map<String, Object>> selectOrderByDate(@ModelAttribute("foo") ModelMap model,
 			@RequestParam("sDate") Long startDate, @RequestParam("eDate") Long endDate) {
 		logger.entry("startDate: " + startDate, "endDate: " + endDate);
-		List<Order> orders = new ArrayList<Order>();
 		Timestamp sDate = new Timestamp(startDate);
 		Timestamp eDate = new Timestamp(endDate);
-		orders = orderDAO.selectOrderByDate(sDate, eDate);
+		List<Map<String,Object>> orders = orderService.selectOrdersByDate(sDate, eDate);
 		model.addAttribute("orders", orders);
 		return logger.exit(orders);
 	}
@@ -143,7 +132,7 @@ public class AdminController {
 	@RequestMapping(value="/list-cup-by-order", method = RequestMethod.POST)
 	public @ResponseBody List<Map<String,Object>> selectCupByOrder(@RequestParam("id") int orderID) {
 		logger.entry("orderID: " + orderID);
-		List<Map<String,Object>> cups = cupDAO.selectCupByOrder(orderID);
+		List<Map<String,Object>> cups = cupService.selectCupsByOrder(orderID);
 		for (Map<String,Object> cup : cups) {
 			String ids = String.valueOf(cup.get("condiments"));
 			String names = cupService.convertIdToName(ids);
@@ -153,14 +142,14 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/order-by-month", method = RequestMethod.POST)
-	public @ResponseBody List<Map<String, Object>> selectOrderByDate(@RequestParam("time") Long monthOfYear) {
+	public @ResponseBody List<Map<String, Object>> selectOrderByMonth(@RequestParam("time") Long monthOfYear) {
 		logger.entry("time: " + monthOfYear);
 		List<Map<String, Object>> orders = new ArrayList<Map<String, Object>>();
 		// get time from request parameters
 		Date time = new Date(monthOfYear);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(time);
-		orders = orderDAO.selectOrderByMonth(cal);
+		orders = orderService.selectOrdersByMonth(cal);
 		return logger.exit(orders);
 	}
 
@@ -176,7 +165,7 @@ public class AdminController {
 	public @ResponseBody Integer getNewCoffee(@RequestBody Coffee coffee) {
 		logger.entry(coffee.toString());
 		Integer response = new Integer(0);
-		response = coffeeDAO.addCoffee(coffee.getProductName(), coffee.getProductPrice(), coffee.isEnabled());
+		response = productService.addProduct(coffee);
 		return logger.exit(response);
 	}
 
@@ -184,8 +173,7 @@ public class AdminController {
 	public @ResponseBody Integer getNewCondiment(@RequestBody Condiment condiment) {
 		logger.entry(condiment.toString());
 		Integer response = new Integer(0);
-		response = condimentDAO.addCondiment(condiment.getProductName(), condiment.getProductPrice(),
-				condiment.isEnabled());
+		response = productService.addProduct(condiment);
 		return logger.exit(response);
 	}
 
@@ -206,7 +194,7 @@ public class AdminController {
 	public @ResponseBody Integer updateCoffee(@RequestBody Coffee coffee) {
 		logger.entry(coffee.toString());
 		Integer response = new Integer(0);
-		response = coffeeDAO.editCoffee(coffee);
+		response = productService.editProduct(coffee);
 		return logger.exit(response);
 	}
 
@@ -214,7 +202,7 @@ public class AdminController {
 	public @ResponseBody Integer updateCondiment(@RequestBody Condiment condiment) {
 		logger.entry(condiment.toString());
 		Integer response = new Integer(0);
-		response = condimentDAO.editCondiment(condiment);
+		response = productService.editProduct(condiment);
 		return logger.exit(response);
 	}
 

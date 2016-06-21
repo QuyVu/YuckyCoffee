@@ -1,4 +1,6 @@
 var string = {
+	largeSize : "",
+	norrmalSize : "",
 	confirmBody : "",
 	invalidPrice : "",
 	emptyOrder : "",
@@ -18,6 +20,8 @@ var string = {
 function setLanguage(lang) {
 	switch (lang) {
 	case "jp":
+		string.largeSize = "大きい";
+		string.normalSize =	"普通";
 		string.confirmBody = "あなたはこの注文を提出しますか？";
 		string.invalidPrice = "合計が間違い";
 		string.emptyOrder = "何も注文しなかった。";
@@ -34,6 +38,8 @@ function setLanguage(lang) {
 		string.success = "成功した！！！";
 		break;
 	case "vi":
+		string.largeSize = "Lớn";
+		string.normalSize =	"Thường";
 		string.confirmBody = "Bạn có muốn duyệt đơn hàng này?";
 		string.invalidPrice = "Tổng giá không hợp lệ";
 		string.emptyOrder = "Đơn hàng không hợp lệ";
@@ -50,6 +56,8 @@ function setLanguage(lang) {
 		string.success = "Thành công!!!";
 		break;
 	default:
+		string.largeSize = "Large";
+		string.normalSize =	"Normal";
 		string.confirmBody = "Are You Sure You Want to Accept this Order";
 		string.invalidPrice = "Invalid order price";
 		string.emptyOrder = "This order is empty";

@@ -1,166 +1,93 @@
-var url = "";
-var order = {
-	purchaseTime : 0,
-	total : 0
-}
-
-var OrderWrapper = {
-	purchaseTime : 0,
-	total : 0,
-	cupArray : []
-}
-
-var coffee = {
-	id : "",
-	name : "",
-	price : 0,
-	enabled : true
-}
-
+var order = new Order(0,"",0,"",0);
+var coffee = new Product(0, "", 0, true);
 var hashCondiment = {};
-
-function Condiment(id, name, price, enabled) {
-	this.id = id, this.name = name, this.price = price, this.enabled = true
-};
-
 var cupArray = [];
-var cArray = [];
-
-var cup = {
-	cupID : 0,
-	orderID : 0,
-	coffeeID : 0,
-	size : "",
-	condiments : "",
-	price : 0
-}
-
-function Cup(cupID, orderID, coffeeID, size, condiments, price) {
-	this.cupID = cupID, this.orderID = orderID, this.coffeeID = coffeeID,
-			this.size = size, this.condiments = condiments, this.price = price
-};
-
-function resetCup() {
-	cup.coffeeID = 0;
-	cup.size = "";
-	cup.condiments = "";
-	cup.price = 0;
-	hashCondiment = {};
-	$("a#selected-coffee").text("");
-	$("span#cup-size").text("");
-	$("p.added-condiment").remove();
-	$("td#cup-price").text("");
-	$("button.btn-add-condiment").prop("disabled", false);
-};
-
-function resetOrder() {
-	order.orderID = 0;
-	order.userName = "";
-	order.purchaseTime = 0;
-	order.total = 0;
-	resetCup();
-	$("tr#cup-row").remove();
-	$("span#total").text("Total: " + order.total + " $");
-};
+var cup = new Cup(0, 0, "", "", "", 0);
 
 // select type of coffee
 $("button.btn-select-coffee").click(function() {
 	if ($("a#selected-coffee").text() == "") {
 		selectCoffee($(this));
 	} else {
-		cup.price = parseFloat(cup.price) - parseFloat(coffee.price);
+		cup.subPrice(parseFloat(coffee.price));
 		selectCoffee($(this));
 	}
 });
 
 function selectCoffee(e) {
-	coffee.id = e.val();
-	coffee.name = e.children("text:nth-child(2)").text();
-	coffee.price = parseFloat(e.children("text:first-child").text());
-	cup.coffeeID = coffee.id;
-	cup.price = parseFloat(cup.price) + parseFloat(coffee.price);
+	coffee.setId(e.val());
+	coffee.setName(e.children("text:nth-child(2)").text());
+	coffee.setPrice(parseFloat(e.children("text:first-child").text()));
+	cup.setCoffee(coffee);
+	cup.addPrice(parseFloat(coffee.price));
+	console.log(cup.price);
 	$("a#selected-coffee").text(coffee.name);
-	$("td#cup-price").text(parseFloat(cup.price) + " $");
+	$("td#cup-price").text(cup.price + " $");
 }
 
 // chose normal size for the cup
-$("button#btn-normal").click(
-		function() {
-			if ($("span#cup-size").text() == "Large"
-					|| $("span#cup-size").text() == "大きい"
-					|| $("span#cup-size").text() == "Lớn") {
-				cup.price = parseFloat(cup.price) - 1;
-				cup.size = "Normal";
-				$("span#cup-size").text(translate(cup.size));
-				$("td#cup-price").text(parseFloat(cup.price) + " $");
-			} else {
-				cup.size = "Normal";
-				$("span#cup-size").text(translate(cup.size));
-			}
-		});
+$("button#btn-normal").click( function() {
+	if (!$("span#cup-size").hasClass("normal")) {
+		$("span#cup-size").removeClass("large");
+		$("span#cup-size").addClass("normal");
+		cup.addPrice(-1);
+		cup.setSize("Normal");
+	} else {
+		cup.setSize("Normal");
+	}
+	$("span#cup-size").text(string.normalSize);
+	$("td#cup-price").text(cup.price + " $");
+});
 
 // chose large size for the cup
-$("button#btn-large").click(
-		function() {
-			if ($("span#cup-size").text() != "Large"
-					|| $("span#cup-size").text() != "大きい"
-					|| $("span#cup-size").text() != "Lớn") {
-				cup.price = parseFloat(cup.price) + 1;
-				cup.size = "Large";
-				$("span#cup-size").text(translate(cup.size));
-				$("td#cup-price").text(parseFloat(cup.price) + " $");
-			} else {
-				cup.size = "Large";
-				$("span#cup-size").text(translate(cup.size));
-			}
-		});
-function translate(string) {
-	if (string == "Normal") {
-		if (lang == "jp")
-			return "通常";
-		else if (lang == "vi")
-			return "Vừa";
-		else
-			return "Normal";
+$("button#btn-large").click( function() {
+	if (!$("span#cup-size").hasClass("large")) {
+		$("span#cup-size").removeClass("normal");
+		$("span#cup-size").addClass("large")
+		cup.addPrice(1);
+		cup.setSize("Large");
 	} else {
-		if (lang == "jp")
-			return "大きい";
-		else if (lang == "vi")
-			return "Lớn";
-		else
-			return "Large";
+		cup.setSize("Large");
 	}
-}
+	$("span#cup-size").text(string.largeSize);
+	$("td#cup-price").text(cup.price + " $");
+});
 
 // Add condiment to cup
-$("button.btn-add-condiment").click(
-		function() {
-			var condiment = new Condiment($(this).val(), $(this).children(
-					"text:nth-child(2)").text(), $(this).children(
-					"text:first-child").text(), true);
-			hashCondiment[condiment.name] = condiment;
-			cup.price = parseFloat(cup.price) + parseFloat(condiment.price);
-			$("td#added-condiments").append(
-					"<p id=" + $(this).val()
-							+ " class='added-condiment' value='"
-							+ $(this).val() + "'>" + condiment.name + "</p>");
-			$("td#cup-price").text(parseFloat(cup.price) + " $");
-			$(this).prop("disabled", true);
-		});
+$("button.btn-add-condiment").click(function() {
+	var condiment = new Product($(this).val(), $(this).children(
+			"text:nth-child(2)").text(), $(this).children(
+			"text:first-child").text(), true);
+	hashCondiment[condiment.name] = condiment;
+	cup.addPrice(condiment.price);
+	$("td#added-condiments").append(
+			"<p id=" + $(this).val()
+			+ " class='added-condiment' value='"
+			+ $(this).val() + "'>" + condiment.name + "</p>");
+	$("td#cup-price").text(cup.price + " $");
+	$(this).prop("disabled", true);
+});
 
 // Remove added condiment
-$("td#added-condiments").on(
-		'click',
-		'.added-condiment',
-		function(event) {
-			var condiment = hashCondiment[$(event.target).text()];
-			cup.price = parseFloat(cup.price) - parseFloat(condiment.price);
-			delete hashCondiment[condiment.name];
-			$("button#btn-condiment-" + $(event.target).attr('id')).prop(
-					"disabled", false);
-			$(event.target).remove();
-			$("td#cup-price").text(parseFloat(cup.price) + " $");
-		});
+$("td#added-condiments").on('click','.added-condiment',function(event) {
+	var condiment = hashCondiment[$(event.target).text()];
+	cup.subPrice(condiment.price);
+	delete hashCondiment[condiment.name];
+	$("button#btn-condiment-" + $(event.target).attr('id')).prop("disabled", false);
+	$(event.target).remove();
+	$("td#cup-price").text(parseFloat(cup.price) + " $");
+	console.log(hashCondiment);
+});
+
+//Submit Cup Info to Server using AJAX
+$("button#apply-cup").click(function() {
+	if (cup.coffee != "" && cup.size != "") {
+		applyCup();
+		appendCheckTable();
+		resetCup();
+	} else
+		alert("You must chose coffee and size");
+});
 
 var condiments;
 
@@ -175,26 +102,17 @@ function applyCup() {
 			cup.condiments += ", " + hashCondiment[key].id;
 		}
 	}
-	var tmpCup = new Cup(cup.cupID, cup.orderID, cup.coffeeID, cup.size,
-			cup.condiments, cup.price);
-	order.total += parseFloat(cup.price);
+	order.addTotal(cup.price);
 	$("span#total").text("Total: " + order.total + " $");
-	cupArray.push(tmpCup);
+	order.addCup(cup);
 };
 
 // display ordered cup
 function appendCheckTable() {
 	var str = "<tr id=\"cup-row\">" + "<td>" + coffee.name + "</td>" + "<td>"
-			+ translate(cup.size) + "</td>" + "<td>" + condiments + "</td> "
+			+ cup.size + "</td>" + "<td>" + condiments + "</td> "
 			+ "<td>" + cup.price + "</td>" + "</tr>";
 	$("tbody#tableCheckOrder").append(str);
-	var letterCup = {
-		coffeeName : coffee.name,
-		size : cup.size,
-		condiment : condiments,
-		price : cup.price
-	};
-	cArray.push(letterCup);
 }
 
 function responseSuccess() {
@@ -207,17 +125,17 @@ function responseSuccess() {
 			+ '<th class="col-md-2">Price ($)</th>' + '</tr>' + '</thead>'
 			+ '<tbody id="cups-tbody">' + '</tbody>' + '</table>';
 	$("#response-modal #response-body").html(str);
-	
+
 	var table = $('#response-cups-table').DataTable({
 		responsive : true,
 		paging : false,
 		info : false,
-		language: {
-        	"url": url
-        },
+		language : {
+			"url" : url
+		},
 		searching : false
 	});
-	
+
 	console.log(JSON.stringify(table));
 	for (i = 0; i < cArray.length; i++)
 		table.row.add(
@@ -266,6 +184,23 @@ function submitOrder() {
 	resetOrder();
 }
 
+function resetCup() {
+	cup = new Cup(0, 0, "", "", "", 0);
+	hashCondiment = {};
+	$("a#selected-coffee").text("");
+	$("span#cup-size").text("");
+	$("p.added-condiment").remove();
+	$("td#cup-price").text("");
+	$("button.btn-add-condiment").prop("disabled", false);
+};
+
+function resetOrder() {
+	order = new Order();
+	resetCup();
+	$("tr#cup-row").remove();
+	$("span#total").text("Total: " + order.total + " $");
+};
+
 // Submit Cup Info to Server using AJAX
 $("button#applyOrder").click(function(event) {
 	// Prevent the form from submitting via the browser.
@@ -281,21 +216,6 @@ $('button#accept-action').click(function() {
 
 $('button#deny-action').click(function() {
 	$("div#confirm-body").children().remove();
-});
-
-// Submit Cup Info to Server using AJAX
-$("button#apply-cup").click(function() {
-	if (cup.coffeeID != 0 && cup.size != "") {
-		applyCup();
-		appendCheckTable();
-		$("a#selected-coffee").text("");
-		$("span#cup-size").text("");
-		$("td#cup-price").text("");
-		$("p.added-condiment").remove();
-		$("button.btn-add-condiment").prop("disabled", false);
-		resetCup();
-	} else
-		alert("You must chose coffee and size");
 });
 
 // Delete the cup

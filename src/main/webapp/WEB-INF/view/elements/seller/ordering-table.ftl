@@ -14,7 +14,7 @@
 			<tbody>
 				<tr>
 					<td class="coffee-name"><a id="selected-coffee"></a></td>
-					<td><span id="cup-size" class="label label-primary"></span></td>
+					<td><span id="cup-size" class="normal label label-primary"></span></td>
 					<td id="added-condiments"></td>
 					<td id="cup-price" value="0"></td>
 					<td style="width: 20%;">

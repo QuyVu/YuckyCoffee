@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.quyvd.config.Principal;
-import com.quyvd.dao.UserDAO;
+import com.quyvd.dao.UserDAOImpl;
 
 @Controller
 public class HomeController {
 
 	@Autowired
-	private UserDAO userDAO;
+	private UserDAOImpl userDAO;
 	@Autowired
 	LocaleResolver localeResolver;
 

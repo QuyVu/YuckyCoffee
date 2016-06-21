@@ -24,6 +24,10 @@
 <script src="resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>    
 <script src="resources/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="resources/bower_components/datatables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="resources/js/shared/cup.js"></script>
+<script src="resources/js/shared/order.js"></script>
+<script src="resources/js/shared/product.js"></script>
+<script src="resources/js/shared/user.js"></script>
 <script src="resources/js/shared/string.js"></script>
 <script src="resources/js/shared/change-lang.js"></script>
 <script src="resources/js/seller-page/ordering.js"></script>
