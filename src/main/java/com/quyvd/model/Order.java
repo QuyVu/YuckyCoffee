@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class Order {
-	private int orderID;
+	private int orderId;
 	private String seller;
 	private Timestamp purchaseTime;
 	private List<Cup> cups;
@@ -14,25 +14,20 @@ public class Order {
 	public Order() {
 	}
 	
-	public Order(int orderID, String userName, Timestamp purchaseTime, double total) {
-		this.orderID = orderID;
+	public Order(int orderId, String userName, Timestamp purchaseTime, List<Cup> cups, double total) {
+		this.orderId = orderId;
 		this.seller = userName;
 		this.purchaseTime = purchaseTime;
-		this.total = total;
-	}
-
-	public Order(String userName, Timestamp purchaseTime, double total) {
-		this.seller = userName;
-		this.purchaseTime = purchaseTime;
+		this.cups = cups;
 		this.total = total;
 	}
 
 	public int getOrderID() {
-		return orderID;
+		return orderId;
 	}
 
 	public void setOrderID(int orderID) {
-		this.orderID = orderID;
+		this.orderId = orderID;
 	}
 
 	public String getUserName() {
@@ -65,6 +60,14 @@ public class Order {
 
 	public void setTotal(double total) {
 		this.total = total;
+	}
+	
+	public String toString() {
+		String cupStr = "";
+		for (Cup cup: this.cups) {
+			cupStr += (cup.toString() + "\n");
+		}
+		return this.orderId + "\t" + this.seller + "\t" + this.purchaseTime + "\t" + cupStr + this.total;
 	}
 	
 }

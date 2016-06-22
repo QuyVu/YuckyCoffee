@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Cup {
 
-	private int cupID;
-	private int orderID;
+	private int cupId;
+	private int orderId;
 	private String size;
 	private Coffee coffee;
 	private List<Condiment> condiments;
@@ -15,20 +15,20 @@ public class Cup {
 	}
 
 	public Cup(int id, int orderID, String size, Coffee coffee, List<Condiment> condiments, double price) {
-		this.cupID = id;
-		this.orderID = orderID;
-		this.coffee = coffee;
+		this.cupId = id;
+		this.orderId = orderID;
 		this.size = size;
+		this.coffee = coffee;
 		this.condiments = condiments;
 		this.price = price;
 	}
 
 	public int getCupID() {
-		return cupID;
+		return cupId;
 	}
 
 	public void setCupID(int cupID) {
-		this.cupID = cupID;
+		this.cupId = cupID;
 	}
 
 	public String getSize() {
@@ -48,11 +48,11 @@ public class Cup {
 	}
 
 	public int getOrderID() {
-		return orderID;
+		return orderId;
 	}
 
 	public void setOrderID(int orderID) {
-		this.orderID = orderID;
+		this.orderId = orderID;
 	}
 
 	public List<Condiment> getCondiments() {
@@ -72,10 +72,10 @@ public class Cup {
 	}
 	
 	public String getCondimentIds () {
-		String idList = null;
+		String idList = "";
 		for(Condiment con: this.condiments) {
-			String s = String.valueOf(con.getProductID());
-			if (idList.equals(null)) idList += s;
+			String s = String.valueOf(con.getId());
+			if (idList.equals("")) idList += s;
 			else idList = idList + ", " + s;
 		}
 		return idList;
@@ -84,7 +84,7 @@ public class Cup {
 	public double getTotalCondiment() {
 		double totalCondiments = 0;
 		for(Condiment con: this.condiments) {
-			totalCondiments += con.getProductPrice();
+			totalCondiments += con.getPrice();
 		}
 		return totalCondiments;
 	}
@@ -92,10 +92,19 @@ public class Cup {
 	public String getCondimentNames() {
 		String nameList = null;
 		for(Condiment con: this.condiments) {
-			String s = con.getProductName();
+			String s = con.getName();
 			if (nameList.equals(null)) nameList += s;
 			else nameList = nameList + ", " + s;
 		}
 		return nameList;
+	}
+	
+	public String toString() {
+		String conStr = "{";
+		for(Condiment c : this.condiments) {
+			conStr += (c.toString() + " \\ ");
+		}
+		conStr += "}";
+		return this.coffee.toString() + " / " + this.size + " " + conStr + " " + this.price;
 	}
 }

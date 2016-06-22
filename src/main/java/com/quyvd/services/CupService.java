@@ -3,6 +3,8 @@ package com.quyvd.services;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import com.quyvd.model.Order;
 @Service
 public class CupService {
 
+	public static final Logger logger = LogManager.getLogger(CupService.class);
 	@Autowired
 	private CoffeeDAOImpl coffeeDAOImpl;
 	@Autowired
@@ -41,7 +44,7 @@ public class CupService {
 
 	public int insertCup(Order order) {
 		for (Cup tmp : order.getCups()) {
-			cupDAOImpl.addCup(order.getOrderID(), tmp.getSize(), tmp.getCoffee().getProductID(), tmp.getCondimentIds(),
+			cupDAOImpl.addCup(order.getOrderID(), tmp.getSize(), tmp.getCoffee().getId(), tmp.getCondimentIds(),
 					tmp.getPrice());
 		}
 		return 1;
@@ -50,11 +53,12 @@ public class CupService {
 	public boolean isValidCups(List<Cup> cups) {
 		boolean isValid = true;
 		for (Cup cup : cups) {
+			logger.debug(cup.getCoffee().getId());
 			double price = 0;
 			if (cup.getSize().equals("Normal")) {
-				price = coffeeDAOImpl.getPriceById(cup.getCoffee().getProductID()) + cup.getTotalCondiment();
+				price = coffeeDAOImpl.getPriceById(cup.getCoffee().getId()) + cup.getTotalCondiment();
 			} else if (cup.getSize().equals("Large")) {
-				price = coffeeDAOImpl.getPriceById(cup.getCoffee().getProductID()) + cup.getTotalCondiment() + 1;
+				price = coffeeDAOImpl.getPriceById(cup.getCoffee().getId()) + cup.getTotalCondiment() + 1;
 			} else {
 				isValid = false;
 				break;

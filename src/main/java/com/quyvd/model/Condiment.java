@@ -3,10 +3,7 @@ package com.quyvd.model;
 public class Condiment extends Product {
 	
 	public Condiment() {
-	}
-	
-	public Condiment(String name, double price) {
-		super(name, price);
+		super();
 	}
 	
 	public Condiment(int id, String name, double price, boolean enabled) {
@@ -14,6 +11,6 @@ public class Condiment extends Product {
 	}
 	
 	public String toString() {
-		return "Condiment: " + this.getProductID() + ", " + this.getProductName() + ", " + this.getProductPrice() + ", " + this.isEnabled();
+		return "Condiment: " + this.getId() + ", " + this.getName() + ", " + this.getPrice() + ", " + this.isEnabled();
 	}
 }

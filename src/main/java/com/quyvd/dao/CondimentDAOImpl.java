@@ -37,7 +37,7 @@ public class CondimentDAOImpl extends JdbcDaoSupport implements ProductDAO {
 
 	public int editProduct(Product condiment) {
 		String sql = "UPDATE condiments SET name = ?, price = ?, enabled = ? WHERE condiment_id = ?";
-		Object[] params = new Object[] { condiment.getProductName(), condiment.getProductPrice(), condiment.isEnabled(), condiment.getProductID() };
+		Object[] params = new Object[] { condiment.getName(), condiment.getPrice(), condiment.isEnabled(), condiment.getId() };
 		try {
 			return this.getJdbcTemplate().update(sql, params);
 		} catch (CannotGetJdbcConnectionException ex) {

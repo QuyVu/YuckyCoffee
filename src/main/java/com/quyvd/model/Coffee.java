@@ -1,12 +1,9 @@
 package com.quyvd.model;
 
-public class Coffee extends Product{
+public class Coffee extends Product {
 
 	public Coffee() {
-	}
-
-	public Coffee(String name, double price) {
-		super(name, price);
+		super();
 	}
 	
 	public Coffee(int id, String name, double price, boolean enabled) {
@@ -14,6 +11,6 @@ public class Coffee extends Product{
 	}
 	
 	public String toString() {
-		return "Coffee: " + this.getProductID() + ", " + this.getProductName() + ", " + this.getProductPrice() + ", " + this.isEnabled();
+		return "Coffee: " + this.getId() + ", " + this.getName() + ", " + this.getPrice() + ", " + this.isEnabled();
 	}
 }

@@ -39,6 +39,7 @@ public class OrderService {
 
 	public int insertOrder(Order order) {
 		if (isValidOrderPrice(order)) {
+			System.out.println(order.getUserName() + " " + order.getPurchaseTime() + " " + order.getTotal());
 			int orderId = orderDAOImpl.addOrder(order.getUserName(), order.getPurchaseTime(), order.getTotal());
 			return orderId;
 		} else return 0;

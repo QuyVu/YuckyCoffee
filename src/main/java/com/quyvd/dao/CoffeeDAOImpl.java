@@ -38,7 +38,7 @@ public class CoffeeDAOImpl extends JdbcDaoSupport implements ProductDAO {
 
 	public int editProduct(Product coffee) {
 		String sql = "UPDATE coffees SET name = ?, price = ?, enabled = ? WHERE coffee_id = ?";
-		Object[] params = new Object[] { coffee.getProductName(), coffee.getProductPrice(), coffee.isEnabled(), coffee.getProductID() };
+		Object[] params = new Object[] { coffee.getName(), coffee.getPrice(), coffee.isEnabled(), coffee.getId() };
 		try {
 			return this.getJdbcTemplate().update(sql, params);
 		} catch (CannotGetJdbcConnectionException ex) {
@@ -58,7 +58,7 @@ public class CoffeeDAOImpl extends JdbcDaoSupport implements ProductDAO {
 	public double getPriceById(int coffeeID) {
 		String sql = "SELECT price FROM coffees WHERE coffee_id=?";
 		Object[] params = new Object[] { coffeeID };
-		Double price = this.getJdbcTemplate().queryForObject(sql, params, Double.class);
+		double price = this.getJdbcTemplate().queryForObject(sql, params, Double.class);
 		return price;
 	}
 

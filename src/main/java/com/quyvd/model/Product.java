@@ -1,54 +1,43 @@
 package com.quyvd.model;
 
 public class Product {
-	private int productID;
-	private String productName;
-	private double productPrice;
+	private int id;
+	private String name;
+	private double price;
 	private boolean enabled;
 	
 	public Product() {
 	}
 
-	public Product(String name, double price) {
-		this.productName = name;
-		this.productPrice = price;
-	}
-
-	public Product(int id, String name, double price) {
-		this.productID = id;
-		this.productName = name;
-		this.productPrice = price;
-	}
-
 	public Product(int id, String name, double price, boolean enabled) {
-		this.productID = id;
-		this.productName = name;
-		this.productPrice = price;
+		this.id = id;
+		this.name = name;
+		this.price = price;
 		this.enabled = enabled;
 	}
-
-	public int getProductID() {
-		return productID;
+	
+	public int getId() {
+		return id;
 	}
 
-	public void setProductID(int productID) {
-		this.productID = productID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getProductName() {
-		return productName;
+	public String getName() {
+		return name;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public double getProductPrice() {
-		return productPrice;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setProductPrice(double productPrice) {
-		this.productPrice = productPrice;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public boolean isEnabled() {
@@ -58,8 +47,8 @@ public class Product {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
 	public String toString() {
-		return "Product: " + this.getProductID() + ", " + this.getProductName() + ", " + this.getProductPrice() + ", " + this.isEnabled();
+		return "Product: " + this.getId() + ", " + this.getName() + ", " + this.getPrice() + ", " + this.isEnabled();
 	}
 }

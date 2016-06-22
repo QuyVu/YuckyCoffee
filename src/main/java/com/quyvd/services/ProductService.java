@@ -22,9 +22,9 @@ public class ProductService {
 
 	public Integer addProduct(Product product) {
 		if (product.getClass().getName().equals("Coffee")) {
-			return coffeeDAOImpl.addProduct(product.getProductName(), product.getProductPrice(), product.isEnabled());
+			return coffeeDAOImpl.addProduct(product.getName(), product.getPrice(), product.isEnabled());
 		} else
-			return condimentDAOImpl.addProduct(product.getProductName(), product.getProductPrice(),
+			return condimentDAOImpl.addProduct(product.getName(), product.getPrice(),
 					product.isEnabled());
 	}	
 	

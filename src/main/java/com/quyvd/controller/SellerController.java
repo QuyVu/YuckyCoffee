@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,7 @@ import com.quyvd.services.ProductService;
 @Controller
 @RequestMapping(value = "/seller")
 public class SellerController {
+	public static final Logger logger = LogManager.getLogger(SellerController.class);
 
 	private Principal principal = new Principal();
 	@Autowired
@@ -56,6 +59,8 @@ public class SellerController {
 
 	@RequestMapping(value = "/submit-order", method = RequestMethod.POST)
 	public @ResponseBody Integer setOrder(@RequestBody Order order) {
+		order.setUserName(principal.getPrincipal());
+		logger.debug(order.toString());
 		List<Cup> cupList = order.getCups();
 		if (order.getTotal() == 0) {
 			return -1;

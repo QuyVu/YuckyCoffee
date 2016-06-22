@@ -1,4 +1,8 @@
 var string = {
+	coffee: "",
+	size: "",
+	condiments: "",
+	price: "",
 	largeSize : "",
 	norrmalSize : "",
 	confirmBody : "",
@@ -20,6 +24,10 @@ var string = {
 function setLanguage(lang) {
 	switch (lang) {
 	case "jp":
+		string.coffee = "コーヒー";
+		string.size = "サイズ";
+		string.condiments = "調味料";
+		string.price = "価格";
 		string.largeSize = "大きい";
 		string.normalSize =	"普通";
 		string.confirmBody = "あなたはこの注文を提出しますか？";
@@ -38,6 +46,10 @@ function setLanguage(lang) {
 		string.success = "成功した！！！";
 		break;
 	case "vi":
+		string.coffee = "Cà phê";
+		string.size = "Cỡ";
+		string.condiments = "Đi kèm";
+		string.price = "Giá";
 		string.largeSize = "Lớn";
 		string.normalSize =	"Thường";
 		string.confirmBody = "Bạn có muốn duyệt đơn hàng này?";
@@ -56,6 +68,10 @@ function setLanguage(lang) {
 		string.success = "Thành công!!!";
 		break;
 	default:
+		string.coffee = "Coffee";
+		string.size = "Size";
+		string.condiments = "Condiments";
+		string.price = "Price";
 		string.largeSize = "Large";
 		string.normalSize =	"Normal";
 		string.confirmBody = "Are You Sure You Want to Accept this Order";
