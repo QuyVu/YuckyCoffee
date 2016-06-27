@@ -1,9 +1,4 @@
-var user = {
-	userName : "",
-	password : "",
-	role : "",
-	enabled : true
-};
+var user = new User("","","",true);
 
 $(document).ready(function() {
     $('#userTable').DataTable({
@@ -25,32 +20,32 @@ function autoCloseModal() {
 }
 
 $("#new_name").keyup(function() {
-	user.userName = $("#new_name").val();
+	user.setUserName($("#new_name").val());
 });
 
 $("#new_password").keyup(function() {
-	user.password = $("#new_password").val();
+	user.setPassword($("#new_password").val());
 });
 
 $("a#roleAdmin").click(
 		function() {
-			user.role = $("a#roleAdmin").text();
+			user.setRole($("a#roleAdmin").text());
 			$("button#btnSelectRole").html(
 					$("a#roleAdmin").text() + " " + '<span class="caret">');
 		});
 
 $("a#roleSeller").click(
 		function() {
-			user.role = $("a#roleSeller").text();
+			user.setRole($("a#roleSeller").text());
 			$("button#btnSelectRole").html(
 					$("a#roleSeller").text() + " " + '<span class="caret">');
 		});
 
 $("#checkStatus").click(function() {
 	if (document.getElementById('checkStatus').checked) {
-		user.enabled = true;
+		user.setEnabled(true);
 	} else {
-		user.enabled = false;
+		user.setEnabled(false);
 	}
 });
 
@@ -99,7 +94,6 @@ function applyNewUser() {
 };
 
 function updateUser(name, act) {
-
 	$.ajax({
 		type : "POST",
 		url : "update-user",
@@ -152,7 +146,7 @@ $("button#submitUser").click(function() {
 
 $("button#unlock-user").click(function() {
 	action = "active"
-	user.userName = $(this).val();
+	user.setUserName($(this).val());
 	var str = "<h3>"+string.confirmUnlockUser+"</h3>"
 	$("div#confirm-body").append(str);
 	$("#confirm-modal").modal();
@@ -160,7 +154,7 @@ $("button#unlock-user").click(function() {
 
 $("button#lock-user").click(function() {
 	action = "deactive"
-	user.userName = $(this).val();
+	user.setUserName($(this).val());
 	var str = "<h3>"+ string.confirmLockUser +"</h3>"
 	$("div#confirm-body").append(str);
 	$("#confirm-modal").modal();

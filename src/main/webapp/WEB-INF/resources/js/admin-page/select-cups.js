@@ -21,17 +21,18 @@ $('#order-tbody').on( 'click', 'tr', function () {
     }
 } );
 
-function listCup(orderID) {
-	$('div#tb-heading').html('<i class="fa fa-list fa-fw"></i> Cups of order #' + orderID);
+function listCup(orderId) {
+	$('div#tb-heading').html('<i class="fa fa-list fa-fw"></i> Cups of order #' + orderId);
 	$.ajax({
 		type : "POST",
 		url : "list-cup-by-order",
 		timeout : 100000,
-		data : {id: orderID},
+		data : {id: orderId},
 		success : function(result) {
 			cupTable.clear().draw();
+			console.log(result);
 			for(i=0;i<result.length;i++){
-				cupTable.row.add([result[i].cupID, result[i].coffeeName, result[i].size, result[i].condiments, result[i].price]).draw();
+				cupTable.row.add([result[i].cup_id, result[i].coffee, result[i].size, result[i].condiments, result[i].price]).draw();
 			}
 		},
 		error : function(data) {

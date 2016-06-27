@@ -31,10 +31,10 @@ public class CupService {
 
 	public String convertIdToName(String ids) {
 		String[] id = ids.split(", ");
-		String result = null;
+		String result = "";
 		for (int i = 0; i < id.length; i++) {
 			String s = condimentDAOImpl.getNameById(Integer.parseInt(id[i]));
-			if (result.equals(null))
+			if (result.equals(""))
 				result = result + s;
 			else
 				result = result + ", " + s;

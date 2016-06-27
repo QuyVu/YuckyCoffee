@@ -18,7 +18,10 @@ var string = {
 	confirmUpdateCoffee: "",
 	confirmAddCondiment: "",
 	confirmUpdateCondiment: "",
-	success : ""
+	success : "",
+	wrongCur : "",
+	wrongRepeat : "",
+	emptyField : ""
 }
 
 function setLanguage(lang) {
@@ -44,6 +47,9 @@ function setLanguage(lang) {
 		string.confirmAddCondiment = "この調味料aを追加しますか？";
 		string.confirmUpdateCondiment = "この調味料を更新しますか？";
 		string.success = "成功した！！！";
+		string.wrongCur = "現在パスワードが間違った";
+		string.wrongRepeat = "確認パスワードが間違った";
+		string.emptyField = "入力情報は足りなかった";
 		break;
 	case "vi":
 		string.coffee = "Cà phê";
@@ -66,6 +72,9 @@ function setLanguage(lang) {
 		string.confirmAddCondiment = "Bạn có muốn thêm condiment này?",
 		string.confirmUpdateCondiment = "Bạn có muốn cập nhật loại condiment này?";
 		string.success = "Thành công!!!";
+		string.wrongCur = "Mật khẩu hiện tại không đúng!";
+		string.wrongRepeat = "Mật khẩu xác nhận không khớp!";
+		string.emptyField = "Còn thông tin chưa được điền!";
 		break;
 	default:
 		string.coffee = "Coffee";
@@ -88,6 +97,9 @@ function setLanguage(lang) {
 		string.confirmAddCondiment = "Are you sure you want to add this condiment?",
 		string.confirmUpdateCondiment = "Are you sure you want to update this condiment?";
 		string.success = "Success!!!";
+		string.wrongCur = "Current Password is wrong!";
+		string.wrongRepeat = "Repeat Password is not match!";
+		string.emptyField = "Some fields are empty!";
 		break;
 	}
 }

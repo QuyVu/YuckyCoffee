@@ -34,6 +34,7 @@
 
     <!-- Custom Theme JavaScript -->
 	<script src="/YuckyCoffee/resources/js/shared/string.js"></script>
+	<script src="/YuckyCoffee/resources/js/shared/product.js"></script>
     <script src="/YuckyCoffee/resources/js/shared/change-lang.js"></script>
     <script src="/YuckyCoffee/resources/js/admin-page/sb-admin-2.js"></script>
     <script src="/YuckyCoffee/resources/js/admin-page/manage-condiment.js"></script>

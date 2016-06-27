@@ -55,8 +55,8 @@ $("button#search-order").click(function(){
 		data : {sDate: startDate, eDate: endDate},
 		success : function(result) {
 			for(i=0;i<result.length;i++){
-				table.row.add([result[i].orderID, result[i].userName, 
-				               moment(result[i].purchaseTime).format('LL'), result[i].total]).draw();
+				table.row.add([result[i].order_id, result[i].username, 
+				               moment(result[i].purchase_time).format('LL'), result[i].total]).draw();
 			}
 		},
 		error : function(data) {

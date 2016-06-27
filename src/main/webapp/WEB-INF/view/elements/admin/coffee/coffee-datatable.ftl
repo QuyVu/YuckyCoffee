@@ -18,45 +18,45 @@
 				<tbody>
 					<#list model["coffees"] as coffee>
 					<tr style="background-color: #${coffee.enabled?string('DCEDC8','FFECB3')}">
-						<td class="text-center">${coffee.coffeeID}</td>
-						<td id="coffee-name-${coffee.coffeeID}" class="coffee-name">
-							<p id="p-name-${coffee.coffeeID}">${coffee.coffeeName}</p> 
-							<input id="input-name-${coffee.coffeeID}" type="text"
+						<td class="text-center">${coffee.id}</td>
+						<td id="coffee-name-${coffee.id}" class="coffee-name">
+							<p id="p-name-${coffee.id}">${coffee.name}</p> 
+							<input id="input-name-${coffee.id}" type="text"
 							class="form-control input-sm" style="display: none; width: 100%"
-							value="${coffee.coffeeName}">
+							value="${coffee.name}">
 						</td>
-						<td id="coffee-price-${coffee.coffeeID}" class="coffee-price">
-							<p id="p-price-${coffee.coffeeID}">${coffee.coffeePrice}</p> 
-							<input id="input-price-${coffee.coffeeID}" type="text" class="form-control input-sm" style="display: none; width: 100%"
-							value="${coffee.coffeePrice}">
+						<td id="coffee-price-${coffee.id}" class="coffee-price">
+							<p id="p-price-${coffee.id}">${coffee.price}</p> 
+							<input id="input-price-${coffee.id}" type="text" class="form-control input-sm" style="display: none; width: 100%"
+							value="${coffee.price}">
 						</td>
 						<td>
-							<p id="p-stt-${coffee.coffeeID}">
+							<p id="p-stt-${coffee.id}">
 								<#if coffee.enabled> <@spring.message "available"/><#else> <@spring.message "unavailable"/></#if>
 							</p> 
-							<select id="select-stt-${coffee.coffeeID}" class="select-stt form-control" style="display: none">
+							<select id="select-stt-${coffee.id}" class="select-stt form-control" style="display: none">
 								<option value="true"><@spring.message "available"/></option>
 								<option value="false"><@spring.message "unavailable"/></option>
 							</select>
 						</td>
 						<td class="text-center">
-							<button id="edit-coffee-${coffee.coffeeID}" name="edit-coffee"
+							<button id="edit-coffee-${coffee.id}" name="edit-coffee"
 								style="width: 80px" class="edit-coffee btn btn-warning btn-sm"
-								value="${coffee.coffeeID}">
+								value="${coffee.id}">
 								<i class="fa fa-pencil-square-o"></i> <@spring.message "button.edit"/>
 							</button>
 
-							<button id="save-coffee-${coffee.coffeeID}"
+							<button id="save-coffee-${coffee.id}"
 								style="width: 80px; display: none;"
 								class="save-coffee btn btn-success btn-sm"
-								value="${coffee.coffeeID}">
+								value="${coffee.id}">
 								<i class="fa fa-floppy-o"></i> <@spring.message "button.save"/>
 							</button>
 
-							<button id="cancel-edit-${coffee.coffeeID}"
+							<button id="cancel-edit-${coffee.id}"
 								style="width: 80px; display: none;"
 								class="cancel-edit btn btn-danger btn-sm"
-								value="${coffee.coffeeID}">
+								value="${coffee.id}">
 								<i class="fa fa-times"></i> <@spring.message "button.cancel"/>
 							</button>
 						</td>

@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.quyvd.config.Principal;
-import com.quyvd.dao.UserDAOImpl;
+import com.quyvd.services.UserService;
 
 @Controller
 public class HomeController {
 
 	@Autowired
-	private UserDAOImpl userDAO;
+	private UserService userService;
 	@Autowired
 	LocaleResolver localeResolver;
 
@@ -76,12 +76,12 @@ public class HomeController {
 			@RequestParam("newPass") String newPass) {
 		Integer response = new Integer(0);
 		System.out.println(curPass + " " + newPass);
-		String pw = userDAO.findPassword(principal.getPrincipal());
+		String pw = userService.findPassword(principal.getPrincipal());
 		System.out.println(pw);
 		if (!pw.equals(curPass)) {
 			response = -1;
 		} else {
-			response = userDAO.changePassword(principal.getPrincipal(), newPass);
+			response = userService.changePassword(principal.getPrincipal(), newPass);
 		}
 		System.out.println(response);
 		return response;

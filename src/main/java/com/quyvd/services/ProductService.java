@@ -21,18 +21,24 @@ public class ProductService {
 	private CondimentDAOImpl condimentDAOImpl;
 
 	public Integer addProduct(Product product) {
-		if (product.getClass().getName().equals("Coffee")) {
+		if (product.getClass().getName().equals("com.quyvd.model.Coffee")) {
 			return coffeeDAOImpl.addProduct(product.getName(), product.getPrice(), product.isEnabled());
 		} else
+			System.out.println(product.getClass().getName().equals("Coffee"));
 			return condimentDAOImpl.addProduct(product.getName(), product.getPrice(),
 					product.isEnabled());
 	}	
 	
 	public Integer editProduct(Product product) {
-		if (product.getClass().getName().equals("Coffee")) {
+		if (product.getClass().getName().equals("com.quyvd.model.Coffee")) {
 			return coffeeDAOImpl.editProduct(product);
 		} else
 			return condimentDAOImpl.editProduct(product);
+	}
+	
+	public String getCoffeeNameById (int coffeeId) {
+		String name = coffeeDAOImpl.getNameById(coffeeId);
+		return name;
 	}
 
 	public List<Coffee> listAllCoffee() {

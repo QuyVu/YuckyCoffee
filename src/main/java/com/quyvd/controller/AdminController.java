@@ -27,13 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.quyvd.config.Principal;
-import com.quyvd.dao.UserDAOImpl;
 import com.quyvd.model.Coffee;
 import com.quyvd.model.Condiment;
 import com.quyvd.model.User;
 import com.quyvd.services.CupService;
 import com.quyvd.services.OrderService;
 import com.quyvd.services.ProductService;
+import com.quyvd.services.UserService;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -43,32 +43,33 @@ public class AdminController {
 	// Logger.getLogger(AdminController.class);
 
 	@Autowired
-	private UserDAOImpl userDAO;
+	private UserService userService;
 
 	@Autowired
 	private ProductService productService;
 
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private CupService cupService;
 
 	@Autowired
 	LocaleResolver localeResolver;
-	
+
 	private Principal principal = new Principal();
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String adminPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang) {
+	public String adminPage(HttpServletRequest request, HttpServletResponse response,
+			@CookieValue(value = "lang", defaultValue = "en") String lang) {
 		logger.entry();
 		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		return logger.exit("redirect:admin/order");
 	}
 
 	@RequestMapping(value = "/order", method = RequestMethod.GET)
-	public String orderPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
-			Model user) {
+	public String orderPage(HttpServletRequest request, HttpServletResponse response,
+			@CookieValue(value = "lang", defaultValue = "en") String lang, Model user) {
 		logger.entry();
 		logger.trace("trace");
 		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
@@ -77,10 +78,11 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String userPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
-			@ModelAttribute("model") ModelMap model, Model user) {
+	public String userPage(HttpServletRequest request, HttpServletResponse response,
+			@CookieValue(value = "lang", defaultValue = "en") String lang, @ModelAttribute("model") ModelMap model,
+			Model user) {
 		logger.entry();
-		List<User> users = userDAO.listUser();
+		List<User> users = userService.listAllUser();
 		model.addAttribute("users", users);
 		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		user.addAttribute("user", principal.getPrincipal());
@@ -88,8 +90,9 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/coffee", method = RequestMethod.GET)
-	public String coffeePage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
-			@ModelAttribute("model") ModelMap model, Model user) {
+	public String coffeePage(HttpServletRequest request, HttpServletResponse response,
+			@CookieValue(value = "lang", defaultValue = "en") String lang, @ModelAttribute("model") ModelMap model,
+			Model user) {
 		logger.entry();
 		List<Coffee> coffees = productService.listAllCoffee();
 		model.addAttribute("coffees", coffees);
@@ -99,8 +102,9 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/condiment", method = RequestMethod.GET)
-	public String condimentPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
-			@ModelAttribute("model") ModelMap model, Model user) {
+	public String condimentPage(HttpServletRequest request, HttpServletResponse response,
+			@CookieValue(value = "lang", defaultValue = "en") String lang, @ModelAttribute("model") ModelMap model,
+			Model user) {
 		logger.entry();
 		List<Condiment> condiments = productService.listAllCondiment();
 		model.addAttribute("condiments", condiments);
@@ -110,8 +114,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/statistic", method = RequestMethod.GET)
-	public String statisticPage(HttpServletRequest request, HttpServletResponse response,@CookieValue(value="lang",defaultValue = "en")String lang,
-			Model user) {
+	public String statisticPage(HttpServletRequest request, HttpServletResponse response,
+			@CookieValue(value = "lang", defaultValue = "en") String lang, Model user) {
 		logger.entry();
 		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		user.addAttribute("user", principal.getPrincipal());
@@ -119,23 +123,25 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public @ResponseBody List<Map<String, Object>> selectOrderByDate(@ModelAttribute("foo") ModelMap model,
-			@RequestParam("sDate") Long startDate, @RequestParam("eDate") Long endDate) {
+	public @ResponseBody List<Map<String, Object>> selectOrderByDate(@RequestParam("sDate") Long startDate,
+			@RequestParam("eDate") Long endDate) {
 		logger.entry("startDate: " + startDate, "endDate: " + endDate);
 		Timestamp sDate = new Timestamp(startDate);
 		Timestamp eDate = new Timestamp(endDate);
-		List<Map<String,Object>> orders = orderService.selectOrdersByDate(sDate, eDate);
-		model.addAttribute("orders", orders);
+		List<Map<String, Object>> orders = orderService.selectOrdersByDate(sDate, eDate);
 		return logger.exit(orders);
 	}
 
-	@RequestMapping(value="/list-cup-by-order", method = RequestMethod.POST)
-	public @ResponseBody List<Map<String,Object>> selectCupByOrder(@RequestParam("id") int orderID) {
-		logger.entry("orderID: " + orderID);
-		List<Map<String,Object>> cups = cupService.selectCupsByOrder(orderID);
-		for (Map<String,Object> cup : cups) {
+	@RequestMapping(value = "/list-cup-by-order", method = RequestMethod.POST)
+	public @ResponseBody List<Map<String, Object>> selectCupByOrder(@RequestParam("id") int orderId) {
+		logger.entry("orderID: " + orderId);
+		List<Map<String, Object>> cups = cupService.selectCupsByOrder(orderId);
+		for (Map<String, Object> cup : cups) {
 			String ids = String.valueOf(cup.get("condiments"));
+			String coffeeName = productService.getCoffeeNameById(Integer.parseInt(String.valueOf(cup.get("coffee_id"))));
 			String names = cupService.convertIdToName(ids);
+			cup.remove("coffee_id");
+			cup.put("coffee", coffeeName);
 			cup.replace("condiments", names);
 		}
 		return logger.exit(cups);
@@ -157,7 +163,7 @@ public class AdminController {
 	public @ResponseBody Integer getUser(@RequestBody User user) {
 		logger.entry(user.toString());
 		Integer response = new Integer(0);
-		response = userDAO.addUser(user.getUserName(), user.getPassword(), user.getRole(), user.isEnabled());
+		response = userService.addUser(user);
 		return logger.exit(response);
 	}
 
@@ -183,9 +189,9 @@ public class AdminController {
 		logger.entry("user: " + userName, "action: " + action);
 		Integer response = new Integer(0);
 		if (action.equals("active")) {
-			response = userDAO.activeUser(userName);
+			response = userService.unlockUser(userName);
 		} else {
-			response = userDAO.deactiveUser(userName);
+			response = userService.lockUser(userName);
 		}
 		return logger.exit(response);
 	}

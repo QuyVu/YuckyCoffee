@@ -1,9 +1,4 @@
-var coffee = {
-	coffeeID : 0,
-	coffeeName : "",
-	coffeePrice : -1,
-	enabled : true
-};
+var coffee = new Product(0,"",0,true);
 
 var action;
 
@@ -16,12 +11,6 @@ $(document).ready(function() {
     });
 });
 
-function setCoffee(id, name, price) {
-	coffee.coffeeID = id;
-	coffee.coffeeName = name;
-	coffee.coffeePrice = parseFloat(price);
-}
-
 function autoCloseModal() {
 	setTimeout(function(){ 
 		$("#response-modal").modal('hide'); 
@@ -31,9 +20,9 @@ function autoCloseModal() {
 }
 
 function validateNewCoffee() {
-	if (coffee.coffeeName == "") {
+	if (coffee.name == "") {
 		return false;
-	} else if (coffee.coffeePrice < 0) {
+	} else if (coffee.price <= 0) {
 		return false;
 	} else {
 		return true;
@@ -152,8 +141,8 @@ $("select#select-enabled").change(function() {
 });
 
 $("button#submit-coffee").click(function() {
-	coffee.coffeeName = $("#new-name").val();
-	coffee.coffeePrice = parseFloat($("#new-price").val());
+	coffee.setName($("#new-name").val());
+	coffee.setPrice(parseFloat($("#new-price").val()));
 	if (validateNewCoffee()) {
 		confirmCoffee("addCoffee");
 	} else {
@@ -176,7 +165,7 @@ $("button.edit-coffee").click(function() {
 $("button.save-coffee").click(function() {
 	if($("select#select-stt-" + $(this).val() + " option:selected").val()=="true") coffee.enabled = true;
 	else coffee.enabled = false;
-	setCoffee(parseInt($(this).val()),$("input#input-name-" + $(this).val()).val(),$("input#input-price-" + $(this).val()).val());
+	coffee.setProduct(parseInt($(this).val()),$("input#input-name-" + $(this).val()).val(),$("input#input-price-" + $(this).val()).val());
 	$(this).hide();
 	$("button#cancel-edit-" + $(this).val()).hide();
 	displayElement("save",$(this).val());

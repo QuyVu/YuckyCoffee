@@ -1,9 +1,4 @@
-var condiment = {
-	condimentID : 0,
-	condimentName : "",
-	condimentPrice : -1,
-	enabled : true
-};
+var condiment = new Product(0,"",-1,true);
 
 var action;
 
@@ -16,11 +11,6 @@ $(document).ready(function() {
     });
 });
 
-function setCondiment(id, name, price) {
-	condiment.condimentID = id;
-	condiment.condimentName = name;
-	condiment.condimentPrice = parseFloat(price);
-}
 function autoCloseModal() {
 	setTimeout(function() {
 		$("#response-modal").modal('hide');
@@ -30,9 +20,9 @@ function autoCloseModal() {
 }
 
 function validateNewCondiment() {
-	if (condiment.condimentName == "") {
+	if (condiment.name == "") {
 		return false;
-	} else if (condiment.condimentPrice < 0) {
+	} else if (condiment.price < 0) {
 		return false;
 	} else {
 		return true;
@@ -52,6 +42,7 @@ function confirmCondiment(act) {
 }
 
 function applyNewCondiment() {
+	console.log(condiment.name);
 	$.ajax({
 		type : "POST",
 		url : "submit-new-condiment",
@@ -151,8 +142,8 @@ $("select#select-enabled").change(function() {
 });
 
 $("button#submit-condiment").click(function() {
-	condiment.condimentName = $("#new-name").val();
-	condiment.condimentPrice = parseFloat($("#new-price").val());
+	condiment.setName($("#new-name").val());
+	condiment.setPrice(parseFloat($("#new-price").val()));
 	if (validateNewCondiment()) {
 		confirmCondiment("addCondiment");
 	} else {
@@ -178,9 +169,9 @@ $("button.save-condiment").click(function() {
 	} else {
 		condiment.enabled = false;
 	}
-	setCondiment(parseInt($(this).val()), $(
-		"input#input-name-" + $(this).val()).val(), $(
-		"input#input-price-" + $(this).val()).val());
+	condiment.setProduct(parseInt($(this).val()), 
+			$("input#input-name-" + $(this).val()).val(), 
+			$("input#input-price-" + $(this).val()).val());
 	$(this).hide();
 	$("button#cancel-edit-" + $(this).val()).hide();
 	displayElement("save", $(this).val());

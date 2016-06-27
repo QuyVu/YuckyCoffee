@@ -5,6 +5,12 @@ function Product(id,name,price,enabled) {
 	this.enabled = enabled;
 }
 
+Product.prototype.setProduct = function(id, name, price) {
+	this.id = id;
+	this.name = name;
+	this.price = parseFloat(price);
+}
+
 Product.prototype.setId = function(id) {
 	this.id = id;
 }
