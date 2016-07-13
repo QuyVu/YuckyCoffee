@@ -38,7 +38,6 @@ public class HomeController {
 		String role = null;
 		localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(auth.isAuthenticated());
 		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
 		for (GrantedAuthority a : authorities) {
 			System.out.println(a.getAuthority());
